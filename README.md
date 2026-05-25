@@ -48,7 +48,7 @@ K --> L[System Design & Advanced]
 
 ## 🌐 GitHub Pages
 
-Link to GitHub Page - https://srivathsan98.github.io/CPP-Mastery/
+Link to GitHub Page - https://srivathsan98.github.io/CPP-Mastery/CPP-Mastery-Tracker.html
 
 ---
 
@@ -159,9 +159,7 @@ Link to GitHub Page - https://srivathsan98.github.io/CPP-Mastery/
 | 📁 File Manager          | Beginner     | File handling system                 |
 | 🧠 Memory Visualizer     | Intermediate | Understand stack & heap visually     |
 | 🎮 Mini Game Engine      | Intermediate | OOP + rendering basics               |
-| 🤖 ROS2 Robot Module     | Advanced     | Robotics integration using C++       |
 | ⚡ Multithreaded Server  | Advanced     | Networking + concurrency             |
-| 🖥️ Qt Desktop App        | Advanced     | GUI application development          |
 | 🔍 Custom STL Container  | Expert       | Rebuild vector/map from scratch      |
 
 ---
@@ -217,8 +215,6 @@ g++ main.cpp -o main
 | CMake | Build system |
 | GDB | Debugging |
 | Valgrind | Memory analysis |
-| Qt | GUI development |
-| ROS2 | Robotics development |
 
 ---
 
@@ -228,7 +224,6 @@ g++ main.cpp -o main
 * ⚙️ Understand memory & performance deeply
 * 🧩 Master problem-solving
 * 🚀 Build production-grade applications
-* 🤖 Develop robotics & embedded applications
 * 🖥️ Build scalable software systems
 
 ---
