@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C++ Mastery - Roadmap & Question Bank</title>
+<style>
+:root{--bg:#0a0c10;--bg2:#111418;--bg3:#181d24;--bg4:#1e2530;--border:#252e3d;--border2:#2e3d52;--text:#dde4f0;--muted:#7a8aaa;--dim:#3d4d66;--green:#4ade80;--blue:#60a5fa;--amber:#fbbf24;--red:#f87171;--purple:#a78bfa;--cyan:#22d3ee;--cpp:#5b7dd8;--mono:'JetBrains Mono',monospace;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:32px 24px 24px;text-align:center}
+.hero-tag{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--cpp);text-transform:uppercase;margin-bottom:10px}
+.hero h1{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--text);margin-bottom:6px}
+.hero-sub{color:var(--muted);font-size:13px;margin-bottom:24px}
+.hero-stats{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:20px}
+.stat{text-align:center}.stat-val{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--cpp)}
+.stat-label{font-size:11px;color:var(--muted);letter-spacing:.05em}
+.overall-bar{max-width:480px;margin:0 auto 8px;height:8px;background:var(--bg4);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
+.overall-fill{height:100%;background:linear-gradient(90deg,#3a56b0,var(--cpp));border-radius:4px;transition:width .5s}
+.overall-label{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.gh-note{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 16px;max-width:620px;margin:16px auto 0;font-size:12px;color:var(--muted);text-align:left}
+.gh-note b{color:var(--text)}
+.sources-note{background:rgba(91,125,216,.06);border:1px solid rgba(91,125,216,.2);border-radius:8px;padding:8px 16px;max-width:680px;margin:10px auto 0;font-family:var(--mono);font-size:10px;color:var(--cpp);letter-spacing:.04em}
+.phase-nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;position:sticky;top:0;z-index:50}
+.phase-btn{font-family:var(--mono);font-size:11px;padding:5px 14px;border:1px solid var(--border2);border-radius:4px;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+.phase-btn:hover{color:var(--text);border-color:var(--muted)}
+.phase-btn.active{color:var(--cpp);border-color:var(--cpp);background:rgba(91,125,216,.07)}
+.module-nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.mod-btn{font-family:var(--mono);font-size:10px;padding:4px 10px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--dim);cursor:pointer;transition:all .12s}
+.mod-btn:hover{color:var(--muted);border-color:var(--border2)}
+.mod-btn.done{border-color:var(--green);color:var(--green)}
+.mod-btn.partial{border-color:var(--amber);color:var(--amber)}
+.content{max-width:1100px;margin:0 auto;padding:24px}
+.phase-header{font-family:var(--mono);font-size:11px;letter-spacing:.15em;color:var(--cpp);text-transform:uppercase;padding:16px 0 8px;border-bottom:1px solid var(--border);margin-bottom:20px}
+.module{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:20px;overflow:hidden}
+.module-head{padding:16px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;user-select:none;transition:background .12s}
+.module-head:hover{background:var(--bg3)}
+.module-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--dim);width:32px;flex-shrink:0}
+.module-icon{font-size:20px;flex-shrink:0}
+.module-info{flex:1}.module-title{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text)}
+.module-desc{font-size:12px;color:var(--muted);margin-top:2px}
+.module-right{text-align:right;flex-shrink:0}
+.mod-count{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.mod-badge{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:3px;margin-top:3px;display:inline-block}
+.badge-ns{background:rgba(61,77,102,.4);color:var(--dim)}
+.badge-ip{background:rgba(251,191,36,.1);color:var(--amber)}
+.badge-done{background:rgba(74,222,128,.1);color:var(--green)}
+.module-chevron{color:var(--dim);font-size:11px;transition:transform .2s;flex-shrink:0}
+.module.open .module-chevron{transform:rotate(90deg)}
+.mod-bar{height:3px;background:var(--bg4);margin:0 20px}
+.mod-bar-fill{height:100%;background:var(--cpp);transition:width .4s}
+.module.open .mod-bar{display:none}
+.module-body{display:none;border-top:1px solid var(--border)}
+.module.open .module-body{display:block}
+.q-table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--bg3)}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);text-transform:uppercase;font-weight:600}
+th:first-child{width:42px;text-align:center}th:nth-child(2){width:44px}
+th:nth-child(4){width:80px}th:nth-child(5){width:90px}th:last-child{width:80px}
+tbody tr{border-bottom:1px solid rgba(37,46,61,.6);transition:background .1s;cursor:pointer}
+tbody tr:hover{background:rgba(91,125,216,.03)}
+tbody tr.checked{opacity:.45}tbody tr:last-child{border-bottom:none}
+td{padding:9px 12px;font-size:13px;vertical-align:middle}td:first-child{text-align:center}
+.cb{width:16px;height:16px;border:1.5px solid var(--border2);border-radius:3px;display:inline-flex;align-items:center;justify-content:center;background:var(--bg3);transition:all .15s}
+tr.checked .cb{background:var(--cpp);border-color:var(--cpp)}
+.cb-check{display:none;font-size:10px;font-weight:800;color:var(--bg)}
+tr.checked .cb-check{display:block}
+.q-num{font-family:var(--mono);font-size:11px;color:var(--dim)}
+.q-text{color:var(--text);line-height:1.5}tr.checked .q-text{text-decoration:line-through;color:var(--dim)}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:3px;font-weight:600;letter-spacing:.04em}
+.tag-theory{background:rgba(96,165,250,.12);color:var(--blue);border:1px solid rgba(96,165,250,.25)}
+.tag-code{background:rgba(91,125,216,.12);color:var(--cpp);border:1px solid rgba(91,125,216,.25)}
+.tag-debug{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.25)}
+.diff{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:3px;font-weight:700;letter-spacing:.04em}
+.diff-B{background:rgba(74,222,128,.1);color:var(--green)}
+.diff-I{background:rgba(251,191,36,.1);color:var(--amber)}
+.diff-A{background:rgba(248,113,113,.1);color:var(--red)}
+.issue-input{width:52px;font-family:var(--mono);font-size:10px;background:var(--bg3);border:1px solid var(--border2);border-radius:3px;color:var(--muted);padding:3px 5px;text-align:center;outline:none}
+.issue-input:focus{border-color:var(--cpp);color:var(--text)}
+.issue-open{display:block;font-family:var(--mono);font-size:9px;color:var(--dim);text-decoration:none;margin-top:2px;text-align:center}
+.issue-open.active{color:var(--blue)}.issue-open.active:hover{text-decoration:underline}
+td.issue-cell{font-size:11px}
+.mod-stats{display:flex;gap:20px;padding:12px 20px;background:var(--bg3);border-bottom:1px solid var(--border);font-size:12px}
+.ms{color:var(--muted)}.ms span{font-family:var(--mono);color:var(--cpp);font-weight:700}
+.mod-prog-bar{flex:1;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;margin-top:6px;align-self:center;max-width:200px}
+.mod-prog-fill{height:100%;background:var(--cpp);border-radius:3px;transition:width .4s}
+.footer{text-align:center;padding:32px;font-family:var(--mono);font-size:11px;color:var(--dim);border-top:1px solid var(--border);margin-top:20px}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-tag">// complete mastery path</div>
+  <h1>C++ MASTERY ROADMAP</h1>
+  <div class="hero-sub">FROM COMPILATION TO SYSTEMS PROGRAMMING &middot; 30 MODULES &middot; FULL QUESTION BANK</div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-val" id="s-modules">30</div><div class="stat-label">Modules</div></div>
+    <div class="stat"><div class="stat-val" id="s-total">0</div><div class="stat-label">Questions</div></div>
+    <div class="stat"><div class="stat-val">3</div><div class="stat-label">Phases</div></div>
+    <div class="stat"><div class="stat-val">&infin;</div><div class="stat-label">Extra drills</div></div>
+  </div>
+  <div style="color:var(--muted);font-size:12px;margin-bottom:16px">
+    Foundation &mdash; Beginner &nbsp;&middot;&nbsp; Intermediate &mdash; Core Mastery &nbsp;&middot;&nbsp; Advanced &mdash; Expert Territory
+  </div>
+  <div class="overall-bar"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
+  <div class="overall-label">
+    <b id="done-count">0</b> / <b id="total-count">0</b> questions done &nbsp;
+    <b id="pct-label">0%</b> overall &nbsp;
+    <b id="mod-done">0</b> / <b id="mod-total">30</b> modules complete
+  </div>
+  <div class="sources-note">Sources merged: cpp_roadmap &middot; cpp_coding_questions_v2 &middot; chatgpt-questions &middot; cpp-coding-hub</div>
+  <div class="gh-note"><b>GitHub sync:</b> Export progress JSON &rarr; commit to your repo &rarr; GitHub Actions updates README badges. Progress key: <code>cpp_mastery_v1</code> (browser localStorage)</div>
+</div>
+<nav class="phase-nav">
+  <button class="phase-btn active" onclick="filterPhase(0)">All phases</button>
+  <button class="phase-btn" onclick="filterPhase(1)">Phase 01 &middot; Foundation</button>
+  <button class="phase-btn" onclick="filterPhase(2)">Phase 02 &middot; Intermediate</button>
+  <button class="phase-btn" onclick="filterPhase(3)">Phase 03 &middot; Advanced</button>
+</nav>
+<div class="module-nav" id="mod-nav"></div>
+<div class="content" id="content"></div>
+<div class="footer">C++ MASTERY &middot; 30 MODULES &middot; COMPILE. PROFILE. SHIP. REPEAT.</div>
+<script>
+const MODULES = [
+{
+  id:'m01',phase:1,num:'01',icon:'🔨',
+  title:'Setup, Compilation & Build Systems',
+  desc:'Toolchain, compilers, flags, multi-file builds, include guards, namespaces.',
+  qs:[
+  ['What is the difference between a compiler and an interpreter? Which one does C++ use?','T','B'],
+  ['Write a complete \'Hello, World!\' program and explain every single line including the preprocessor directive.','T','B'],
+  ['What is the role of the `#include` directive? Explain the difference between `<iostream>` and `\\','T','B'],
+  ['<< std::endl;` do step by step? What is `std::endl` vs `\'\\\\n\'`?','T','B'],
+  ['What is `using namespace std;`? Is it good practice? What problems can it cause?','T','B'],
+  ['What is a linker error vs a compiler error? Give an example of each.','T','B'],
+  ['Explain the purpose of include guards (`#ifndef` / `#define` / `#endif`). What problem do they solve?','T','B'],
+  ['What is `#pragma once` and how does it differ from traditional include guards?','T','B'],
+  ['What are command-line arguments? Write a program that prints all arguments passed to `main`.','T','B'],
+  ['What does the `-Wall` compiler flag do? Name 5 warnings it enables and why each matters.','T','B'],
+  ['Write a program that prints \'Hello, World!\' and exits with code 0. Then exit with code 42 and confirm it with `echo $?`.','C','B'],
+  ['Write a program that prints the numbers 1–100 each on its own line using a for loop.','C','B'],
+  ['Write a program that takes your first name as `argv[1]` and prints \'Hello, <name>!\'. If missing, print \'Usage: ./hello <name>\'.','C','B'],
+  ['Create two files: `mathlib.h` declaring `int add(int,int); int mul(int,int);` and `mathlib.cpp` implementing them. Use both in `main.cpp`.','C','B'],
+  ['Write a program that prints `sizeof` for every fundamental type: char, short, int, long, long long, float, double, long double, bool, pointer.','C','B'],
+  ['Write a Makefile with targets: `all`, `clean`, `run`. Compile with `-Wall -Wextra -std=c++17 -O2`.','C','B'],
+  ['Write a program that prints the binary representation of any unsigned int using bit shifting, no library functions.','C','B'],
+  ['Write a program that reads two integers from stdin and prints their sum, difference, product, and quotient (handle divide by zero).','C','B'],
+  ['Write a program that prints the multiplication table (1–12) formatted in aligned columns using `setw`.','C','B'],
+  ['Write a program that counts how many command-line arguments were passed and prints each with its index.','C','B'],
+  ['Write a program that uses `#define` macros for PI and E. Then rewrite using `constexpr double`. Compare both in assembly with `-S`.','C','B'],
+  ['Write a program that reads a line of text from stdin using `std::getline` and prints it reversed, character by character.','C','B'],
+  ['Write a program that prints your system\'s endianness (little or big) by storing 0x01020304 in an int and reading its first byte.','C','B'],
+  ['Write a `hello.sh` shell script and a `hello.cpp` that both do the same thing. Time both with `time ./hello` and compare startup cost.','C','B'],
+  ['Write a program with a function in a separate translation unit that you call from main. Deliberately create a linker error by removing the definition, then fix it.','C','B'],
+  ['Write a program that compiles with warnings-as-errors using `-Wall -Werror -pedantic` and shows a warning intentionally.','C','B'],
+  ['Create a header file with a simple function, include it in main.cpp, and use include guards.','C','B'],
+  ['Write a program with two namespaces and show name collision without `using namespace`.','C','B'],
+  ['Build a multi-file project: one header, two source files, and link them manually with g++.','C','B'],
+  ['Write a program that fails ODR and fix it.','C','B'],
+  ['Create a program that uses conditional compilation with #ifdef DEBUG.','C','B'],
+  ['Write a simple main that returns EXIT_SUCCESS explicitly.','C','B'],
+  ['Demonstrate translation unit difference with static variable in header vs source.','C','B'],
+  ['Write a program with inline function in header and use it across files.','C','B'],
+  ['Show pragma once vs include guards difference (compile test).','C','B'],
+  ['Create a program with forward declaration and why it&#x27;s needed.','C','B'],
+  ['Write a main that uses command-line arguments (argc/argv).','C','B'],
+  ['Build a debug vs release binary and show size difference.','C','B'],
+  ['Use __FILE__ and __LINE__ macros in a logging function.','C','B'],
+  ['Write a program that uses static_assert in C++11+.','C','B']
+  ]
+},
+{
+  id:'m02',phase:1,num:'02',icon:'📦',
+  title:'Variables, Types & Literals',
+  desc:'Fundamental types, auto, type aliases, sizeof, literals, overflow.',
+  qs:[
+  ['List all primitive data types in C++. For each, state its typical size in bytes and value range on a 64-bit system.','T','B'],
+  ['What is the difference between `int`, `long`, `long long`, and `unsigned long long`? When would you use each?','T','B'],
+  ['What is integer overflow? Write code that demonstrates it and explain why it\'s undefined behavior.','T','B'],
+  ['What is the difference between `float`, `double`, and `long double`? When does floating-point precision matter?','T','B'],
+  ['What is `auto`? Rewrite `std::vector<int>::iterator it = v.begin();` using `auto`.','T','B'],
+  ['Explain the difference between `const int x = 5;` and `constexpr int x = 5;`.','T','B'],
+  ['What is a string literal? What type does `\\','T','B'],
+  ['` have in C vs C++?','T','B'],
+  ['What are escape sequences? List and explain at least 8 of them.','T','B'],
+  ['What is type casting? Explain C-style cast, `static_cast`, `dynamic_cast`, `reinterpret_cast`, and `const_cast`.','T','B'],
+  ['What is the `sizeof` operator? Write code using it and explain why sizes might differ across platforms.','T','B'],
+  ['What are `true` and `false` in C++? What type are they and how do they interact with integers?','T','B'],
+  ['What is an `unsigned` integer? What happens when you subtract from 0 in an unsigned integer?','T','B'],
+  ['What is `nullptr`? Why was it introduced over `NULL` and `0`?','T','B'],
+  ['What is a character literal? What is the difference between `\'a\'`, `\\','T','B'],
+  ['`, and `L\'a\'`?','T','B'],
+  ['What is `decltype`? Write an example where `auto` gives a different type than `decltype`.','T','B'],
+  ['What is the difference between initialization and assignment? Give 4 different ways to initialize an integer.','T','B'],
+  ['Write a function that detects signed integer overflow before it happens using only arithmetic (no builtins).','C','B'],
+  ['Write `bool isPowerOf2(unsigned n)` using only one bitwise operation.','C','B'],
+  ['Write a function that counts the number of 1-bits in a uint32_t without using `__builtin_popcount`.','C','B'],
+  ['Write a program that demonstrates type truncation: assign 300 to a `char`, 70000 to a `short`, and print what you get.','C','B'],
+  ['Write `constexpr uint64_t factorial(uint64_t n)` and verify it computes at compile time using `static_assert`.','C','B'],
+  ['Implement `float fastInvSqrt(float x)` using the famous Quake III bit-level hack. Compare precision vs `1.0f/sqrtf(x)`.",d:\'h\',g:[\'bit_cast\',\'floating-point\',\'tricks\']}, {t:"Write a function `string toBinary(uint64_t n)` that returns the binary string representation, MSB first, no leading zeros.','C','B'],
+  ['Write a template `clamp<T>(T v, T lo, T hi)` and a `wrap<T>(T v, T lo, T hi)` (wraps around like a modulo). Test with int and float.','C','B'],
+  ['Write a program using `auto`, `decltype`, and `decltype(auto)` showing 5 cases where they deduce different types.','C','B'],
+  ['Write `uint32_t byteSwap(uint32_t x)` that reverses the byte order (little↔big endian) without loops.','C','B'],
+  ['Write a `union` that stores a float and lets you read its raw bytes as a `uint32_t`. Print the sign, exponent, and mantissa bits of 3.14f.','C','B'],
+  ['Write a program that prints every integer from INT_MIN to INT_MAX using `std::numeric_limits`. (Just print the limits, not every number!)','C','B'],
+  ['Write a `constexpr int log2Floor(unsigned n)` using bit operations, verified with `static_assert` for multiple values.','C','B'],
+  ['Write a function that packs four `uint8_t` values into one `uint32_t` and unpacks them back. Verify round-trip.','C','B'],
+  ['Write a program that demonstrates implicit conversion dangers: int to float precision loss, double to int truncation, signed to unsigned sign flip.','C','B'],
+  ['Read two integers from cin, compute sum/product/modulo, output with fixed precision.','C','B'],
+  ['Write a program that overflows int and detects it using std::numeric_limits.','C','B'],
+  ['Create variables of all fundamental types, print their sizeof().','C','B'],
+  ['Read a line with getline(cin, str) and output length.','C','B'],
+  ['Compute compound interest: P*(1+r/n)^(nt) with double, output formatted.','C','B'],
+  ['Write a program that swaps two variables without temp using arithmetic.','C','B'],
+  ['Demonstrate implicit narrowing conversion bug and fix with static_cast.','C','B'],
+  ['Read multiple numbers until EOF and sum them.','C','B'],
+  ['Use ternary operator to find max of three numbers.','C','B'],
+  ['Print a triangle of stars using nested loops and iomanip for alignment.','C','B'],
+  ['Compute factorial iteratively with unsigned long long, handle overflow check.','C','B'],
+  ['Read char by char from cin, count vowels.','C','B'],
+  ['Use bit operators: set/clear/test bit in integer.','C','B'],
+  ['Format output with setw, setfill, setprecision.','C','B'],
+  ['Demonstrate signed/unsigned comparison bug.','C','B']
+  ]
+},
+{
+  id:'m03',phase:1,num:'03',icon:'🔁',
+  title:'Control Flow',
+  desc:'if/else, switch, loops, break/continue, range-for, goto (and why not).',
+  qs:[
+  ['What is a conditional expression? Write code that finds the maximum of three numbers using only `if/else`.','T','B'],
+  ['What is the ternary operator `? :`? Rewrite an if/else chain using it.','T','B'],
+  ['Explain the `switch` statement. What is fall-through? How do you prevent it? Show an example.','T','B'],
+  ['What happens if you forget `break` in a switch case? Is there ever a reason to want fall-through?','T','B'],
+  ['What is the difference between `while`, `do-while`, and `for` loops? When is each most appropriate?','T','B'],
+  ['Write a `for` loop that iterates backwards from 100 to 1 skipping even numbers.','T','B'],
+  ['What does `break` do inside a nested loop? How would you break out of all nested loops?','T','B'],
+  ['What does `continue` do? Rewrite a loop using `continue` and then without using `continue`.','T','B'],
+  ['What is the range-based `for` loop? Write one that iterates over a `std::vector<std::string>`.','T','B'],
+  ['What is an infinite loop? Write three different infinite loops and explain when you\'d use one intentionally.','T','B'],
+  ['What is short-circuit evaluation? Show how it can prevent a null pointer dereference.','T','B'],
+  ['Explain the difference between `&&` and `&`, and between `||` and `|`.','T','B'],
+  ['What is `goto`? Why is it almost always wrong? Is there any legitimate use for it in C++?','T','B'],
+  ['Write a FizzBuzz program. Now refactor it to avoid any redundant condition checks.','T','B'],
+  ['What is the difference between `==` and `=`? What happens if you accidentally write `if (x = 5)`?','T','B'],
+  ['FizzBuzz 1–100: no if/else anywhere in your solution. Use only the ternary operator, arrays, or arithmetic.','C','B'],
+  ['Print a diamond of asterisks height 2N-1. Input N=5 should produce a diamond 9 rows tall.','C','B'],
+  ['Implement the Collatz conjecture: for every starting number 1–1,000,000, find which one produces the longest chain.','C','B'],
+  ['Print a spiral matrix of size N×N filled 1..N² going clockwise inward.','C','B'],
+  ['Write a switch statement mapping HTTP status codes 100–599 to their reason phrases using ranges and fall-through deliberately.','C','B'],
+  ['Write a number guessing game where the computer plays optimally: it always finds your number in ≤7 guesses (binary search strategy).','C','B'],
+  ['Print Pascal\'s triangle for N rows, centered and formatted with spaces.','C','B'],
+  ['Write a program that finds all prime numbers up to 10,000,000 using the Sieve of Eratosthenes.','C','B'],
+  ['Write a loop that reads integers from stdin until EOF, then prints them sorted without using std::sort — use insertion sort in the loop.','C','B'],
+  ['Implement a simple calculator REPL: read \'a op b\', evaluate, print result, loop. Support +, -, *, /, % and \'quit\'.','C','B'],
+  ['Write a program that generates and solves a maze using depth-first search (recursive backtracker). Print the solved path.",d:\'h\',g:[\'DFS\',\'recursion\',\'simulation\']}, {t:"Write a program that prints the 8-queens solution: place 8 queens on a chessboard with no two attacking. Print all solutions.",d:\'h\',g:[\'backtracking\',\'recursion\']}, {t:"Implement a Conway\'s Game of Life simulation for a 40×20 grid, running for 100 generations, printed to terminal.','C','B'],
+  ['Write a program that validates a Sudoku board (9×9 array): check all rows, columns, and 3×3 boxes are valid.','C','B'],
+  ['Implement a Sudoku solver using backtracking. It should solve any valid board.",d:\'h\',g:[\'backtracking\',\'recursion\',\'2d-array\']}, {t:"Write a program that generates the first 50 rows of Pascal\'s triangle and finds all entries that are multiples of a prime p.','C','B'],
+  ['Read n, print numbers 1 to n if even sum, else n to 1.','C','B'],
+  ['FizzBuzz: 1-100, multiples of 3/5 print Fizz/Buzz.','C','B'],
+  ['Read array of 10 ints, find max/min using loops.','C','B'],
+  ['Prime check function using trial division, test 1-100.','C','B'],
+  ['Sum digits of number using while loop.','C','B'],
+  ['Pattern: print pyramid of numbers on separate lines: 1, 12, 123.','C','B'],
+  ['GCD using Euclidean algorithm with while.','C','B'],
+  ['Armstrong number check (sum cubes of digits == number).','C','B'],
+  ['Fibonacci up to n using iterative loop.','C','B'],
+  ['Sort three numbers using if-else.','C','B'],
+  ['Count even/odd in 1-n using for.','C','B'],
+  ['Reverse a number using do-while.','C','B'],
+  ['Leap year check with multiple conditions.','C','B'],
+  ['Binary to decimal conversion using loop.','C','B'],
+  ['Menu-driven calculator with switch.','C','B']
+  ]
+},
+{
+  id:'m04',phase:1,num:'04',icon:'🔧',
+  title:'Functions & Recursion',
+  desc:'Function signatures, overloading, default args, inline, recursion.',
+  qs:[
+  ['What is the difference between function declaration and function definition? Can they be in separate files?','T','B'],
+  ['What is function overloading? Write three overloaded functions with the same name but different signatures.','T','B'],
+  ['What are default parameters? Write a function `greet(string name, string greeting = \\','T','B'],
+  [')` and call it both ways.','T','B'],
+  ['What is the difference between pass-by-value and pass-by-reference? Which is more efficient for large objects?','T','B'],
+  ['What is a `const` reference parameter? Why would you use `const string&` over `string` as a parameter?','T','B'],
+  ['What is function inlining? What does the `inline` keyword do and when should you use it?','T','B'],
+  ['What is recursion? Write a recursive function to compute Fibonacci numbers. What is its time complexity?','T','B'],
+  ['What is stack overflow? Write a recursive function that causes one and explain why it happens.','T','B'],
+  ['What is tail recursion? Rewrite `factorial(n)` as tail-recursive and explain if C++ compilers optimize it.','T','B'],
+  ['What is the return type `void`? Can a `void` function use `return`?','T','B'],
+  ['What is function signature? Can two functions have the same name and parameter types but different return types?','T','B'],
+  ['What are variadic functions (`...`)? How do `va_list`, `va_start`, `va_arg`, `va_end` work?','T','B'],
+  ['What is a lambda expression? Write a lambda that captures by value and one that captures by reference.','T','B'],
+  ['What is `std::function`? How is it different from a raw function pointer?','T','B'],
+  ['What is function hiding? Explain with an example involving derived classes.','T','B'],
+  ['Write three overloaded `toString` functions for int, double, bool. Then replace with a single template.','C','B'],
+  ['Write a recursive `int power(int base, int exp)` then an iterative version. Verify they match for 100 cases.','C','B'],
+  ['Implement binary search recursively and iteratively. Both return index or -1 if not found.','C','B'],
+  ['Write `void permutations(string s)` that prints all permutations in lexicographic order without duplicates.','C','B'],
+  ['Write a memoized `uint64_t fib(int n)` using a `static unordered_map`. Verify fib(70) without overflow using big integer approach.','C','B'],
+  ['Implement `printf`-style `void myprintf(const char* fmt, ...)` supporting %d, %s, %f, %c, %% using `<cstdarg>`.','C','B'],
+  ['Write a function `double integrate(function<double(double)> f, double a, double b, int n)` using Simpson\'s rule.','C','B'],
+  ['Implement `void mergeSort(vector<int>& v)` recursively. Measure its performance vs `std::sort` on 10M elements.','C','B'],
+  ['Write a function pointer table: an array of 10 function pointers to `int(int)` functions (square, cube, double, etc.). Call them by index.','C','B'],
+  ['Implement tail-recursive `int factorial(int n, int acc=1)`. Verify with `-O2` that the compiler eliminates the recursion (check assembly).','C','B'],
+  ['Write `int ackermann(int m, int n)`. What is ackermann(3,7)? Add memoization to make it feasible.",d:\'h\',g:[\'recursion\',\'memoization\']}, {t:"Write a function that generates all subsets of a set {1..N} using recursion and bit manipulation. Print them.','C','B'],
+  ['Implement quicksort with random pivot. Add a partition counter and compare average vs worst-case partition counts on 10,000 elements.','C','B'],
+  ['Write a `curry` function that converts `f(int a, int b, int c)` into `f(a)(b)(c)` using lambdas and `std::function`.",d:\'h\',g:[\'functional\',\'currying\',\'lambdas\']}, {t:"Write `compose(f, g)` returning a lambda for `f(g(x))`. Extend to variadic `compose(f,g,h,...)` using fold expressions.",d:\'h\',g:[\'functional\',\'variadic\',\'fold\']}, {t:"Implement a function decorator `timed(f)` that wraps any `std::function` and prints execution time using `std::chrono`.','C','B'],
+  ['Write factorial recursive and iterative, compare for n=10.','C','B'],
+  ['Fibonacci recursive with memoization array.','C','B'],
+  ['Power function recursive (x^n).','C','B'],
+  ['Sum array recursive.','C','B'],
+  ['Reverse string recursive.','C','B'],
+  ['GCD recursive.','C','B'],
+  ['Tower of Hanoi for 3 disks (print moves).','C','B'],
+  ['Binary search recursive on sorted array.','C','B'],
+  ['Palindrome check recursive.','C','B'],
+  ['Function overload: add two ints, three doubles, two strings.','C','B'],
+  ['Default args: greet(name="", age=0).','C','B'],
+  ['Pass-by-value vs reference: swap demo.','C','B'],
+  ['Inline function for small computation.','C','B'],
+  ['Recursive countdown with base case.','C','B'],
+  ['Function returning multiple values via struct.','C','B'],
+  ['Tail recursion example: sum 1-n.','C','B']
+  ]
+},
+{
+  id:'m05',phase:1,num:'05',icon:'📋',
+  title:'Arrays, Strings & Pointers',
+  desc:'C arrays, std::string, std::array, pointer arithmetic, references.',
+  qs:[
+  ['Declare a C-style array of 10 integers and initialize it. How do you access the last element?','T','B'],
+  ['What is array decay? When does an array decay to a pointer? What information is lost?','T','B'],
+  ['What is out-of-bounds access? Write code that causes it and explain why it\'s undefined behavior.','T','B'],
+  ['What is `std::array`? How does it differ from a C-style array? Why is it generally safer?','T','B'],
+  ['Implement `strlen`, `strcpy`, `strcat`, `strcmp`, `strrev` from scratch without `<cstring>`.','C','B'],
+  ['Write `bool isAnagram(string a, string b)` in O(n) with O(1) space (fixed 26-char array).','C','B'],
+  ['Write `string longestCommonSubsequence(string a, string b)` using dynamic programming.','C','B'],
+  ['Implement run-length encoding: \'AAABBBCCDDDDEE\' → \'3A3B2C4D2E\' and its inverse.','C','B'],
+  ['Write Knuth-Morris-Pratt (KMP) string search. Return all start indices of pattern in text.",d:\'h\',g:[\'KMP\',\'strings\',\'algorithms\']}, {t:"Implement `string longestPalindromicSubstring(string s)` using Manacher\'s algorithm in O(n).",d:\'h\',g:[\'strings\',\'DP\',\'Manacher\']}, {t:"Write a function that rotates an N×N matrix 90° clockwise in-place, O(1) space.','C','B'],
+  ['Implement `int myAtoi(string s)` handling whitespace, sign, overflow, and non-digit characters exactly like the LeetCode problem.','C','B'],
+  ['Write `vector<string> wordWrap(string text, int width)` — wrap words at `width` chars, no mid-word breaks.','C','B'],
+  ['Implement a `Trie` class with `insert(word)`, `search(word)`, `startsWith(prefix)` using raw nodes.','C','B'],
+  ['Write `string compress(string s)`: \'aabcccdddd\' → \'a2bc3d4\'. If compressed is longer, return original.','C','B'],
+  ['Implement `vector<string> split(string s, char delim)` without using `stringstream`.','C','B'],
+  ['Write `string multiply(string a, string b)` — multiply two very large numbers represented as strings.",d:\'h\',g:[\'strings\',\'big-integer\',\'math\']}, {t:"Write `string addBinary(string a, string b)` — add two binary number strings and return binary result.','C','B'],
+  ['Read 10 ints into array, find sum/avg/max.','C','B'],
+  ['Reverse array in place.','C','B'],
+  ['Find duplicate in array using frequency count.','C','B'],
+  ['String palindrome check ignoring case.','C','B'],
+  ['Copy one string to another without strcpy.','C','B'],
+  ['Pointer swap two numbers.','C','B'],
+  ['Array of pointers to strings, sort alphabetically.','C','B'],
+  ['Dynamic array resize simulation.','C','B'],
+  ['C-string tokenization with strtok demo.','C','B'],
+  ['std::string find/substr/replace example.','C','B'],
+  ['Pointer to pointer: 2D array simulation.','C','B'],
+  ['Const pointer vs pointer to const demo.','C','B'],
+  ['string_view on c-string without copy.','C','B'],
+  ['Rotate array left by k positions.','C','B'],
+  ['Anagram check two strings.','C','B']
+  ]
+},
+{
+  id:'m06',phase:1,num:'06',icon:'🗃️',
+  title:'Structs, Classes & OOP Basics',
+  desc:'Struct vs class, access, constructors, destructors, this pointer.',
+  qs:[
+  ['What is a `struct`? How does it differ from a `class` in C++? (Hint: it\'s just one keyword difference.)','T','B'],
+  ['Write a `struct Point` with `x` and `y`, a constructor, and a method `distanceTo(Point other)`.','T','B'],
+  ['What is a constructor? What is a default constructor? When is one automatically generated?','T','B'],
+  ['What is a destructor? When is it called? Write a class that prints a message in its destructor.','T','B'],
+  ['What is a copy constructor? Write one manually for a class that holds a raw pointer.','T','B'],
+  ['What is the rule of three? What three methods must you define if you define any one of them?','T','B'],
+  ['What is an initializer list (in constructors)? Why is it more efficient than assignment in the constructor body?','T','B'],
+  ['What is `this` pointer? How do you use it to disambiguate between a member and a parameter with the same name?','T','B'],
+  ['What is operator overloading? Overload `+` for a `Vector2D` class.','T','B'],
+  ['What are access specifiers `public`, `private`, `protected`? Write a class that uses all three.','T','B'],
+  ['What is a member function vs a non-member function? When should a function be a member?','T','B'],
+  ['What is a `static` member variable? What is a `static` member function? Write an example.','T','B'],
+  ['What is `friend`? Write a `friend` function and explain why it can be necessary.','T','B'],
+  ['What is an aggregate type? What is aggregate initialization?','T','B'],
+  ['What is `explicit` on a constructor? Write a class where `explicit` prevents a bug.','T','B'],
+  ['Implement `class Complex` with `+`, `-`, `*`, `/`, `==`, `!=`, unary `-`, `<<`, `>>` (stream I/O), `abs()`, `arg()`.','C','B'],
+  ['Implement `class Matrix` with dimensions, `operator+`, `operator*`, `operator[]`, `transpose()`, `determinant()` for 2×2.','C','B'],
+  ['Write a `Stack<T>` class backed by `std::vector<T>`. Add `push`, `pop`, `top`, `empty`, `size`, `swap`. Make it iterable.','C','B'],
+  ['Implement a `Queue<T>` using two stacks internally (`push_stack` and `pop_stack`). Amortized O(1) enqueue/dequeue.','C','B'],
+  ['Implement `class Rational` (fraction p/q) with automatic GCD reduction. Overload all arithmetic and comparison operators.','C','B'],
+  ['Write a `class BigInt` supporting arbitrary-precision non-negative integers stored as `vector<int>`. Implement `+`, `-`, `*`, `<<`.",d:\'h\',g:[\'big-integer\',\'classes\',\'math\']}, {t:"Write a `class Date` with validation, `operator<`, `operator-` (days between), `operator+` (add days), and leap year check.','C','B'],
+  ['Implement a `class Graph` (adjacency list) with `addEdge`, `BFS`, `DFS`, `hasCycle`, `shortestPath` (unweighted).",d:\'h\',g:[\'graph\',\'BFS\',\'DFS\',\'classes\']}, {t:"Write a `class Timer` RAII that starts a `std::chrono` clock on construction and prints elapsed time on destruction.','C','B'],
+  ['Implement a `class StringView` (a non-owning view of a string) with `operator[]`, `substr`, `find`, `starts_with`, `ends_with`.','C','B'],
+  ['Write a thread-safe `Singleton<T>` using `std::call_once`. Add `reset()` for testing. Verify thread-safety.','C','B'],
+  ['Implement `class Bitset<N>` using `uint64_t[]` internally. Support `set`, `reset`, `flip`, `test`, `count`, `operator|`, `&`, `^`.",d:\'h\',g:[\'bitset\',\'bits\',\'classes\']}, {t:"Write a `class Polynomial` with `operator+`, `operator*`, `evaluate(x)`, `derivative()`, and `operator<<` for printing.','C','B'],
+  ['Implement a `class EventQueue` where events are prioritized by time. `push(time, callback)`, `processNext()`, `processUntil(t)`.','C','B'],
+  ['Rectangle class: members length/width, area/perimeter methods.','C','B'],
+  ['Student class: name, marks array, average grade.','C','B'],
+  ['BankAccount: deposit/withdraw/balance, private balance.','C','B'],
+  ['Point class: x/y, distance to origin.','C','B'],
+  ['Book class: title/author, display info.','C','B'],
+  ['Complex number: real/imag, add/multiply operators.','C','B'],
+  ['Date class: day/month/year, validate.','C','B'],
+  ['Employee class: id/name/salary, raise(%) method.','C','B'],
+  ['Circle class: radius, area/circumference.','C','B'],
+  ['Fraction class: num/den, simplify gcd.','C','B'],
+  ['Const member function demo on class.','C','B'],
+  ['Static member: count objects created.','C','B'],
+  ['Constructor with default values.','C','B'],
+  ['Destructor print message.','C','B'],
+  ['Getter/setter with validation.','C','B']
+  ]
+},
+{
+  id:'m07',phase:1,num:'07',icon:'🏗️',
+  title:'Inheritance & Polymorphism',
+  desc:'Inheritance, virtual, override, final, abstract classes, dynamic dispatch.',
+  qs:[
+  ['Explain single inheritance. Write a `Shape` base class with a `Circle` and `Rectangle` derived class.','T','B'],
+  ['What is multiple inheritance? What is the diamond problem? How does `virtual` inheritance solve it?','T','B'],
+  ['What is a virtual function? What happens at the machine code level (vtable, vptr)?','T','B'],
+  ['What is a pure virtual function? What is an abstract class? Can you instantiate one?','T','B'],
+  ['What is the override specifier? What is `final`? Why use them instead of relying on the compiler?','T','B'],
+  ['What is polymorphism? Demonstrate runtime polymorphism with base class pointers and virtual dispatch.','T','B'],
+  ['What is object slicing? When does it occur and how do you prevent it?','T','B'],
+  ['What is a virtual destructor? What goes wrong without one? Write a specific example.','T','B'],
+  ['What is the difference between `public`, `protected`, and `private` inheritance? How does each affect member visibility?','T','B'],
+  ['What is covariant return type? Give an example where a derived class overrides a virtual function with a derived return type.','T','B'],
+  ['What is the Non-Virtual Interface (NVI) idiom? How does it give you control over pre/post conditions?','T','B'],
+  ['Implement a basic plugin system using abstract interfaces and dynamic loading conceptually.','T','B'],
+  ['What is CRTP (Curiously Recurring Template Pattern)? Show how it achieves static polymorphism.','T','B'],
+  ['What is the interface segregation principle? Refactor a bloated interface into smaller, focused ones.','T','B'],
+  ['What is Liskov Substitution Principle? Write code that violates it and explain the consequences.','T','B'],
+  ['What is protected member access? When does a derived class break encapsulation by using `protected`?','T','B'],
+  ['What is a mixin class? Implement a `Serializable` mixin using multiple inheritance.','T','B'],
+  ['Implement a type-safe observer pattern using virtual functions.','T','B'],
+  ['What is the difference between late binding and early binding? How does `virtual` trigger late binding?','T','B'],
+  ['What is `dynamic_cast`? When does it succeed vs fail? What is `typeid` and RTTI?','T','B'],
+  ['Implement `Shape` → `Circle`, `Rectangle`, `Triangle`. Virtual `area()`, `perimeter()`, `draw()`. Store in `vector<unique_ptr<Shape>>`.','C','B'],
+  ['Implement the diamond problem: A→B, A→C, D→B+C. Fix with virtual inheritance. Show the vtable layout changes.",d:\'h\',g:[\'diamond\',\'virtual-inheritance\',\'vtable\']}, {t:"Write an `Animal` → `Dog`, `Cat`, `Bird` hierarchy. Virtual `speak()`, `move()`. Use `dynamic_cast` to call bird-specific `fly()`.','C','B'],
+  ['Implement a `Serializable` abstract class with `serialize(ostream&)` and `deserialize(istream&)`. Make `Point` and `Circle` serializable.','C','B'],
+  ['Implement an `Iterator<T>` abstract base class. Write concrete `ArrayIterator<T>` and `FilterIterator<T>` that wraps another iterator.",d:\'h\',g:[\'iterator-pattern\',\'templates\',\'abstract\']}, {t:"Write a `Command` pattern hierarchy: `ICommand` with `execute()` and `undo()`. Implement `MoveCommand`, `ResizeCommand`. Build an undo stack.','C','B'],
+  ['Implement CRTP mixin: `Comparable<Derived>` provides `<`, `>`, `<=`, `>=`, `!=` from derived class\'s `operator==` and `operator<`.",d:\'h\',g:[\'CRTP\',\'mixin\',\'templates\']}, {t:"Write a `Plugin` interface with `getName()`, `execute()`, `getVersion()`. Implement 3 plugins. A `PluginManager` loads and runs them.','C','B'],
+  ['Implement `Visitor` pattern: `Shape` hierarchy with `accept(Visitor&)`. Write `AreaVisitor` and `SerializeVisitor`.",d:\'h\',g:[\'visitor-pattern\',\'polymorphism\',\'double-dispatch\']}, {t:"Write a `StateMachine<States, Events>` template. Implement a traffic light with states Red/Yellow/Green and events Timer/Emergency.",d:\'h\',g:[\'state-machine\',\'templates\',\'polymorphism\']}, {t:"Implement covariant return types: `Animal::clone()` returns `Animal*`, `Dog::clone()` returns `Dog*`. Show it\'s well-typed.','C','B'],
+  ['Write the Non-Virtual Interface (NVI) pattern: public non-virtual `draw()` calls private virtual `doDraw()`. Add pre/post logging.','C','B']
+  ]
+},
+{
+  id:'m08',phase:1,num:'08',icon:'💾',
+  title:'Dynamic Memory & RAII',
+  desc:'new/delete, memory leaks, RAII, stack vs heap, smart pointer intro.',
+  qs:[
+  ['What is the difference between stack and heap memory? Draw a diagram describing the memory layout of a process.','T','B'],
+  ['What does `new` do? What does `delete` do? What is the sequence of operations under the hood?','T','B'],
+  ['Write `DynArray<T>` — dynamic array with `push_back`, `pop_back`, `operator[]`, `size`, `capacity`, `reserve`, `clear`. Doubles on growth.','C','B'],
+  ['Add `begin()`, `end()`, copy constructor, copy assignment, move constructor, move assignment, and destructor to `DynArray<T>` (Rule of Five).",d:\'h\',g:[\'rule-of-five\',\'iterators\',\'templates\']}, {t:"Rewrite `DynArray<T>` using `std::unique_ptr<T[]>` internally. Ensure move works in O(1).','C','B'],
+  ['Implement `SharedPtr<T>` from scratch with reference counting, `operator*`, `operator->`, `use_count()`, `reset()`, and copy/move semantics.",d:\'h\',g:[\'shared_ptr\',\'reference-counting\',\'RAII\']}, {t:"Implement `UniquePtr<T>` from scratch with deleted copy, move constructor, move assignment, `release()`, `reset()`, `operator*`, `->`.",d:\'h\',g:[\'unique_ptr\',\'move\',\'RAII\']}, {t:"Write `WeakPtr<T>` that works with your `SharedPtr<T>`. It must not prevent deletion and must detect expired pointers.",d:\'h\',g:[\'weak_ptr\',\'shared_ptr\',\'reference-counting\']}, {t:"Write a custom `new`/`delete` override that tracks total live allocations, total bytes, and reports a summary on exit.','C','B'],
+  ['Write a `MemoryPool<T,N>` that pre-allocates N objects and dispenses them from a free list without calling `new`.",d:\'h\',g:[\'pool-allocator\',\'free-list\']}, {t:"Implement placement new usage: allocate a `char[sizeof(T)*N]` buffer, construct T objects into it, destruct them manually.','C','B'],
+  ['Write a `ScopeGuard` that takes a lambda on construction and calls it on destruction. Add `dismiss()` to cancel.','C','B'],
+  ['Write a RAII `FileHandle` that wraps `FILE*` from `<cstdio>`. Open in constructor, close in destructor. Throw if open fails.','C','B'],
+  ['Write a program that intentionally leaks memory in a function, then fix it. Run both with Valgrind and show the difference.','C','B'],
+  ['Implement an `ArenaAllocator` that allocates from a fixed `char[N]` buffer using bump pointer. Reset() frees all at once.','C','B']
+  ]
+},
+{
+  id:'m09',phase:1,num:'09',icon:'🔢',
+  title:'Enums, Unions & Type System',
+  desc:'enum class, union, std::variant, type aliases, typedef.',
+  qs:[
+  ['What is an `enum`? What is an `enum class`? What is the key difference in terms of scoping and type safety?','T','B'],
+  ['What is the underlying type of an enum? How do you specify it?','T','B'],
+  ['Convert between an `enum class` and its underlying type using `static_cast`. Why is the cast required?','T','B'],
+  ['What is a `union`? Write a type-punning union that reads an `int` as 4 bytes. What are the risks?','T','B'],
+  ['What is undefined behavior in unions? When is type punning through unions legal?','T','B'],
+  ['What is `std::variant`? How is it a safer alternative to unions? Write an example.','T','B'],
+  ['What is `typedef`? Rewrite `typedef unsigned long long uint64;` using `using`.','T','B'],
+  ['What is a type alias template? Write `template<typename T> using Vec = std::vector<T>;`.','T','B'],
+  ['What is the purpose of `using` for type aliases compared to `typedef`? Which is more readable with templates?','T','B'],
+  ['What is an anonymous union? Write a class with one and explain its use case.','T','B'],
+  ['Write a tagged union manually (without `std::variant`) that safely stores either `int` or `double`.','T','B'],
+  ['What is `std::optional`? When is it better than using a sentinel value or a pointer?','T','B'],
+  ['What are bitmask enums? Write an enum class with bitmask values and overload `|` and `&` for it.','T','B'],
+  ['What is `std::any`? How does it differ from `std::variant`? What is the performance cost?','T','B'],
+  ['What is the enum `underlying_type_t`? How would you iterate over all values of an enum class?','T','B']
+  ]
+},
+{
+  id:'m10',phase:1,num:'10',icon:'📂',
+  title:'File I/O & Streams',
+  desc:'iostream, fstream, stringstream, formatting, error states.',
+  qs:[
+  ['What is `std::cin`? What is `std::cout`? What headers do they require? What are they at the type level?','T','B'],
+  ['What is the difference between `std::cout`, `std::cerr`, and `std::clog`? When would you use each?','T','B'],
+  ['What does `std::cin >> x` do when input fails? How do you detect and recover from that failure?','T','B'],
+  ['What is `std::getline`? Why is it often needed after `std::cin >>`? Explain the newline problem.','T','B'],
+  ['Write a program that reads a file line by line using `std::ifstream` and counts the number of words.','T','B'],
+  ['What is `std::ofstream`? Write a program that writes a CSV file with headers and 5 rows of data.','T','B'],
+  ['What is `std::stringstream`? Write a function that splits a `string` by a delimiter using `stringstream`.','T','B'],
+  ['What is stream formatting? Use `std::setw`, `std::setfill`, `std::left`, `std::right`, `std::fixed`, `std::setprecision`.','T','B'],
+  ['What is `std::ios::binary` mode? Write code to read and write binary data to a file.','T','B'],
+  ['What is stream state (`failbit`, `badbit`, `eofbit`, `goodbit`)? How do you check and clear them?','T','B'],
+  ['What is stream buffering? What is the difference between flushing with `endl` and `\'\\\\n\'`?','T','B'],
+  ['What is `std::printf` and `std::scanf`? Compare them to C++ streams. What are the risks of `scanf`?','T','B'],
+  ['What is `std::format` (C++20)? Format a table with column alignment using it.','T','B'],
+  ['What is `seekg` and `seekp`? Write code that reads from the middle of a file.','T','B'],
+  ['What are custom stream manipulators? Write one that prints numbers in a specific currency format.','T','B'],
+  ['Write a CSV parser: read a file, split rows and columns, return `vector<vector<string>>`. Handle quoted fields with commas inside.','C','B'],
+  ['Write a word frequency counter reading from stdin. Print top-20 words sorted by frequency descending.','C','B'],
+  ['Implement a hex dump: read binary file, print offset | hex bytes (16/line) | ASCII printable chars.','C','B'],
+  ['Write a `tail -f` equivalent: poll a file every 500ms for new lines and print them as they appear using `seekg`.",d:\'h\',g:[\'fstream\',\'seekg\',\'polling\']}, {t:"Implement binary serialization for `struct Record {string name; int age; float score; vector<int> scores;}` with `save` and `load`.','C','B'],
+  ['Write a `Logger` class that writes to a file with timestamps, log levels (DEBUG/INFO/WARN/ERROR), and flushes on ERROR.','C','B'],
+  ['Write a program using `std::format` (C++20) to generate a formatted report table with column headers, right-aligned numbers, and totals.','C','B'],
+  ['Implement a simple `INI` file parser: `[section]`, `key=value` pairs. Return `map<string,map<string,string>>`.','C','B'],
+  ['Write a program that reads a text file and produces a concordance: for each unique word, list every line number it appears on.','C','B'],
+  ['Implement `grep`: read lines from a file, print those matching a literal substring. Add `-n` (line numbers) and `-i` (case-insensitive) flags.','C','B'],
+  ['Write a file compressor/decompressor using run-length encoding (RLE) that handles binary data correctly.','C','B']
+  ]
+},
+{
+  id:'m11',phase:2,num:'11',icon:'🧬',
+  title:'Templates & Generic Programming',
+  desc:'Function/class templates, specialization, variadic, concepts (C++20).',
+  qs:[
+  ['What is a function template? Write a template `max` function that works for any comparable type.','T','I'],
+  ['What is a class template? Write a `Pair<T, U>` class template with getter methods.','T','I'],
+  ['What is template instantiation? What is explicit vs implicit instantiation?','T','I'],
+  ['What is template specialization? Write a full specialization of a `Print<T>` function for `bool`.','T','I'],
+  ['What is partial specialization? Write a partial specialization of a class template for pointer types.','T','I'],
+  ['What is SFINAE (Substitution Failure Is Not An Error)? Write a function enabled only for integral types using it.','T','I'],
+  ['What is `std::enable_if`? How is it used to conditionally enable function overloads?','T','I'],
+  ['What is a variadic template? Write a `print` function that takes any number of arguments of any types.','T','I'],
+  ['What is a template parameter pack? What is pack expansion? Write `sum(args...)` that adds any number of values.','T','I'],
+  ['What is `if constexpr`? Rewrite a SFINAE solution using `if constexpr` for clarity.','T','I'],
+  ['What are non-type template parameters? Write a `std::array`-like class `Array<T, N>`.','T','I'],
+  ['What are template template parameters? Write a function that works with any `Container<T>`.','T','I'],
+  ['What is a concept (C++20)? Define a `Comparable` concept and use it to constrain a template.','T','I'],
+  ['What is `std::declval`? Why is it needed when working with types in unevaluated contexts?','T','I'],
+  ['What is template argument deduction? When does it succeed or fail? What is CTAD (Class Template Argument Deduction)?','T','I'],
+  ['What is an expression template? Show how they can eliminate temporary objects in matrix math.','T','I'],
+  ['What is the `typename` keyword in templates? When is it required vs optional?','T','I'],
+  ['What is a dependent name? What is `typename` vs `template` disambiguators in nested templates?','T','I'],
+  ['Write a type trait `is_pointer<T>` from scratch without using `<type_traits>`.','T','I'],
+  ['What is `std::conditional`? Use it to select between two types at compile time.','T','I'],
+  ['Implement `Tuple<T...>` from scratch using variadic templates and recursive inheritance. Support `get<N>()` and `tuple_size`.",d:\'h\',g:[\'variadic\',\'TMP\',\'tuple\']}, {t:"Write `TypeList<T...>` and implement compile-time ops: `TypeAt<N>`, `Contains<T>`, `Append<T>`, `Remove<T>`, `Reverse`.",d:\'h\',g:[\'TMP\',\'type-list\',\'variadic\']}, {t:"Implement `std::optional<T>` from scratch: `value()`, `value_or()`, `has_value()`, `operator*`, `operator->`, `operator bool`.",d:\'h\',g:[\'optional\',\'templates\',\'union\']}, {t:"Write `std::variant<T...>` from scratch: aligned storage, type index, `get<T>()`, `holds_alternative<T>()`, `visit()`.",d:\'h\',g:[\'variant\',\'type-erasure\',\'TMP\']}, {t:"Write `std::expected<T,E>` from scratch with `.and_then()`, `.or_else()`, `.transform()`, `.map_error()` monadic operations.",d:\'h\',g:[\'expected\',\'error-handling\',\'monadic\']}, {t:"Implement a `Pipeline<Funcs...>` where `Pipeline<f,g,h>{}(x)` computes `h(g(f(x)))` using template parameter packs.",d:\'h\',g:[\'variadic\',\'functional\',\'TMP\']}, {t:"Write a type-safe `StaticMap<pair<K,V>...>` using template parameter packs. Support compile-time `get<Key>()` lookup.",d:\'h\',g:[\'TMP\',\'compile-time\',\'constexpr\']}, {t:"Implement `for_each_type<TypeList, F>` that calls `F<T>{}()` for each type in the list.",d:\'h\',g:[\'TMP\',\'type-list\',\'compile-time\']}, {t:"Write a concept `Container<T>` requiring `begin`, `end`, `size`, `value_type`. Constrain a generic `print_all` function.','C','I'],
+  ['Implement a `memoize<F>(F f)` that works for any callable with any signature using `std::unordered_map` and `std::tuple` as key.",d:\'h\',g:[\'memoize\',\'templates\',\'tuple\']}, {t:"Write `apply(f, tuple)` that calls `f` with the tuple elements as arguments using `std::index_sequence`.",d:\'h\',g:[\'tuple\',\'index_sequence\',\'TMP\']}, {t:"Implement `zip(v1, v2, v3...)` that takes multiple ranges and produces a range of tuples of corresponding elements.",d:\'h\',g:[\'ranges\',\'variadic\',\'iterators\']}, {t:"Write a `type_safe::Result<T,E>` that enforces checking the error before accessing the value (compile-time enforced, no ignoring).",d:\'h\',g:[\'templates\',\'error-handling\',\'type-safety\']}, {t:"Implement a compile-time `constexpr` sort on a `std::array<int,N>` using constexpr bubble sort.','C','I'],
+  ['Template max(T a, T b).','C','I'],
+  ['Template swap(T& a, T& b).','C','I'],
+  ['StaticVector<N,T> fixed capacity.','C','I'],
+  ['Template stack class.','C','I'],
+  ['SFINAE is_integral check.','C','I'],
+  ['Variadic sum template.','C','I'],
+  ['Template trait has_member_foo.','C','I'],
+  ['Generic pair<T,U> with CTAD.','C','I'],
+  ['Partial spec for char* in string template.','C','I'],
+  ['Enable_if for numeric types only.','C','I'],
+  ['Perfect forwarding constructor.','C','I'],
+  ['Generic lambda sort vector.','C','I'],
+  ['Template using alias.','C','I'],
+  ['Var template pi = 3.14.','C','I'],
+  ['Deduction guides for class.','C','I'],
+  ['Non-type template param size.','C','I'],
+  ['Fold expression sum variadic.','C','I'],
+  ['Traits for container size.','C','I'],
+  ['Universal ref function.','C','I'],
+  ['Template recursion factorial.','C','I'],
+  ['Policy template class.','C','I']
+  ]
+},
+{
+  id:'m12',phase:2,num:'12',icon:'🚀',
+  title:'Move Semantics & Perfect Forwarding',
+  desc:'Rvalue refs, move ctor/assign, std::move, std::forward, Rule of 5.',
+  qs:[
+  ['What is an lvalue? What is an rvalue? Give 5 examples of each.','T','I'],
+  ['What is an rvalue reference `T&&`? How does it differ from an lvalue reference `T&`?','T','I'],
+  ['What is a move constructor? Write one for a class that manages a dynamic array.','T','I'],
+  ['What is a move assignment operator? Write one. What is the copy-and-swap idiom and how does it simplify this?','T','I'],
+  ['What is `std::move`? Does it actually move anything? What does it really do?','T','I'],
+  ['What is the rule of five? What are the 5 special member functions?','T','I'],
+  ['What happens if you access an object after it has been moved from? What is the guaranteed state?','T','I'],
+  ['What is perfect forwarding? What problem does it solve?','T','I'],
+  ['What is `std::forward`? Why does it need the template parameter explicitly?','T','I'],
+  ['What is universal reference (forwarding reference) `T&&` in a template context?','T','I'],
+  ['What is reference collapsing? What are the rules for `& &&`, `&& &`, `&& &&`, `& &`?','T','I'],
+  ['What is Return Value Optimization (RVO) and Named Return Value Optimization (NRVO)? How do they relate to move semantics?','T','I'],
+  ['What is `std::exchange`? Implement a move constructor using it.','T','I'],
+  ['What is a sink parameter? When should a function take by value instead of by reference?','T','I'],
+  ['Implement a `unique_ptr` from scratch with correct move semantics and deleted copy operations.','T','I'],
+  ['What is the impact of move semantics on `std::vector` reallocation performance?','T','I'],
+  ['What is `noexcept` and why does `std::vector` require move constructors to be `noexcept`?','T','I'],
+  ['What is `std::move_iterator`? How does it affect algorithms like `std::copy`?','T','I'],
+  ['Write a function `make_unique` equivalent for a class with a non-trivial move constructor.','T','I'],
+  ['What is elision? When is the compiler mandated (C++17) to elide copies?','T','I'],
+  ['Implement `class Buffer` (owns `unique_ptr<char[]>` + size). Write all 5 special members. Move must be O(1), copy must deep-copy.','C','I'],
+  ['Write `SmallVector<T,N>`: stores ≤N elements on the stack, spills to heap. Moving a heap-backed instance is O(1).",d:\'h\',g:[\'SBO\',\'move\',\'optimization\']}, {t:"Implement `class InplaceFunction<Sig, Size=64>`: like `std::function` but never heap-allocates (stores in internal buffer).",d:\'h\',g:[\'type-erasure\',\'SBO\',\'move\']}, {t:"Write a `ProducerQueue<T>` where moved-from state is always valid and well-defined. Demonstrate the guarantee with tests.','C','I'],
+  ['Implement copy-and-swap idiom for a class managing a resource. Show it provides strong exception guarantee.','C','I'],
+  ['Write a variadic `make_unique` equivalent that perfectly forwards all arguments and handles arrays too.','C','I'],
+  ['Implement `std::move_iterator` from scratch. Use it to move-construct elements from one vector into another.",d:\'h\',g:[\'move_iterator\',\'iterators\',\'move\']}, {t:"Write a `cow_ptr<T>` (copy-on-write pointer): multiple instances share one object; writing causes a deep copy.",d:\'h\',g:[\'COW\',\'shared_ptr\',\'move\']}, {t:"Implement a `string` class with small string optimization (SSO): 15-byte inline buffer, heap only for longer strings.",d:\'h\',g:[\'SSO\',\'move\',\'optimization\',\'string\']}, {t:"Write `deferred<T>`: a lazy value computed once on first access, stored, and moved to callers thereafter.','C','I'],
+  ['UniquePtr template: ctor from raw ptr, dtor delete, -> and *.','C','I'],
+  ['SharedPtr subset: refcount, copy/move, weak check.','C','I'],
+  ['Implement a FileRAII class that opens a file in its constructor, closes it in the destructor, and provides read/write methods.','C','I'],
+  ['Vector class with move ctor/assign.','C','I'],
+  ['Class with resource: array alloc in ctor, free in dtor.','C','I'],
+  ['Copy-and-swap idiom for assign.','C','I'],
+  ['Class that throws in ctor, show partial init avoidance.','C','I'],
+  ['Move-from-self test in assign.','C','I'],
+  ['RAII lock guard for mutex simulation.','C','I'],
+  ['Class with two resources: file + buffer.','C','I'],
+  ['Noexcept move ctor demo.','C','I'],
+  ['Rule of five class implementation.','C','I'],
+  ['Delegating ctor usage.','C','I'],
+  ['Inheriting ctor demo.','C','I'],
+  ['Mem-initializer list for base + members.','C','I'],
+  ['Dtor virtual demo with base/derived.','C','I'],
+  ['Copy elision test with NRVO.','C','I'],
+  ['Exception-safe swap.','C','I'],
+  ['Class with custom deleter.','C','I'],
+  ['Move-only type using std::move.','C','I'],
+  ['RAII scope guard for cleanup.','C','I']
+  ]
+},
+{
+  id:'m13',phase:2,num:'13',icon:'📦',
+  title:'STL Containers & Algorithms',
+  desc:'vector, map, unordered_map, set, deque, list, span, ranges, algorithms.',
+  qs:[
+  ['Explain the complexity guarantees of `std::vector`: access, push_back (amortized), insert, erase.','T','I'],
+  ['What is `std::deque`? When would you prefer it over `std::vector`?','T','I'],
+  ['What is `std::list`? What is `std::forward_list`? When is a linked list actually better than a vector?','T','I'],
+  ['What is `std::map`? What tree structure does it use? What are the complexity guarantees for find, insert, erase?','T','I'],
+  ['What is `std::unordered_map`? How does it work (hash table)? What is the worst-case complexity for lookup?','T','I'],
+  ['What is `std::set` vs `std::multiset`? What is `std::unordered_set`?','T','I'],
+  ['What is `std::priority_queue`? What underlying container does it use? Write a Dijkstra\'s algorithm sketch using it.','T','I'],
+  ['What is `std::stack` and `std::queue`? What are their underlying containers?','T','I'],
+  ['What is a range in STL? What are the requirements for an iterator to work with STL algorithms?','T','I'],
+  ['What are the 5 iterator categories? For each, give an example container/situation.','T','I'],
+  ['Use `std::sort`, `std::stable_sort`, `std::partial_sort`. What algorithm does each use?','T','I'],
+  ['Use `std::find`, `std::find_if`, `std::binary_search`, `std::lower_bound`, `std::upper_bound`.','T','I'],
+  ['Use `std::transform`, `std::for_each`, `std::accumulate`, `std::reduce`. What is the difference between accumulate and reduce?','T','I'],
+  ['Use `std::copy_if`, `std::remove_if`, `std::partition`, `std::stable_partition`. Explain the erase-remove idiom.','T','I'],
+  ['What are C++20 ranges? Rewrite a filter+transform pipeline using `std::views::filter` and `std::views::transform`.','T','I'],
+  ['What is `std::span`? When does it replace passing pointer+size pairs?','T','I'],
+  ['What is `std::flat_map` (C++23)? How does it differ from `std::map` in terms of cache performance?','T','I'],
+  ['Write a custom comparator for `std::sort` that sorts a `vector<Person>` by age then by name.','T','I'],
+  ['What is `std::tie` and how is it used to implement multi-field comparison for sorting?','T','I'],
+  ['Profile the difference between `std::map` and `std::unordered_map` for 1 million integer keys.','T','I'],
+  ['Implement LRU cache with O(1) `get(key)` and `put(key,val)` using `std::list<pair<K,V>>` + `unordered_map<K, list::iterator>`.",d:\'h\',g:[\'LRU\',\'list\',\'unordered_map\']}, {t:"Implement LFU cache — evict the least frequently used, tie-break by recency.",d:\'h\',g:[\'LFU\',\'cache\',\'map\']}, {t:"Write top-K frequent elements in O(n log k) using `std::priority_queue` with a custom comparator.','C','I'],
+  ['Implement merge of K sorted arrays in O(N log K) using a min-heap.",d:\'h\',g:[\'heap\',\'merge\',\'sorting\']}, {t:"Write Dijkstra\'s shortest path using `priority_queue<pair<int,int>>` and adjacency list.",d:\'h\',g:[\'Dijkstra\',\'graph\',\'priority_queue\']}, {t:"Implement a `RingBuffer<T,N>` with a random-access iterator satisfying `std::random_access_iterator` concept.",d:\'h\',g:[\'iterator\',\'concepts\',\'ring-buffer\']}, {t:"Use `std::ranges` (C++20): filter a vector of `Person` by age > 25, sort by name, transform to `string`, join with commas.','C','I'],
+  ['Write a custom `std::partition` that is stable, in-place, and preserves relative order (stable_partition from scratch).",d:\'h\',g:[\'partition\',\'stable\',\'algorithms\']}, {t:"Implement `nth_element` using median-of-medians algorithm for guaranteed O(n) worst-case.",d:\'h\',g:[\'nth_element\',\'median\',\'algorithms\']}, {t:"Write a `FlatMap<K,V>` backed by two parallel `vector<K>` and `vector<V>` sorted by key. Support O(log n) find, O(n) insert.','C','I'],
+  ['Implement counting sort, radix sort (LSD and MSD), and bucket sort. Benchmark them vs `std::sort` on various distributions.",d:\'h\',g:[\'sorting\',\'radix\',\'counting\']}, {t:"Write a `sliding_window_max(vector<int> v, int k)` in O(n) using `std::deque`.','C','I'],
+  ['Sort vector of pairs by second, stable.','C','I'],
+  ['Use transform to square vector elements.','C','I'],
+  ['Erase-remove for unique elements in vector.','C','I'],
+  ['Merge two sorted vectors into one.','C','I'],
+  ['Find max element with lambda.','C','I'],
+  ['Use list for LRU cache simulation.','C','I'],
+  ['unordered_map word frequency count.','C','I'],
+  ['Priority_queue for top k frequent.','C','I'],
+  ['set intersection of two sets.','C','I'],
+  ['accumulate sum with custom op.','C','I'],
+  ['next_permutation on array.','C','I'],
+  ['partition even/odd in place.','C','I'],
+  ['Use multimap for student grades.','C','I'],
+  ['deque as queue with front/back pop.','C','I'],
+  ['binary_search on sorted vector.','C','I'],
+  ['reverse_iterator demo on string.','C','I'],
+  ['Use ranges::sort, ranges::views::filter (C++20).','C','I'],
+  ['emplace into map of vectors.','C','I'],
+  ['adjacent_find duplicates.','C','I'],
+  ['Use span on array.','C','I'],
+  ['Custom comparator for sort.','C','I']
+  ]
+},
+{
+  id:'m14',phase:2,num:'14',icon:'λ',
+  title:'Lambdas & Functional Programming',
+  desc:'Lambda captures, mutable, generic lambdas, std::function, std::bind.',
+  qs:[
+  ['Write a lambda that captures `x` by value, `y` by reference, and the rest by reference. Show its expanded class equivalent.','T','I'],
+  ['What is a generic lambda (C++14)? Write one that works on any printable type.','T','I'],
+  ['What is a lambda with an explicit return type? When is it necessary?','T','I'],
+  ['What is a mutable lambda? Why is `mutable` needed to modify captured-by-value variables?','T','I'],
+  ['Implement `map`, `filter`, `fold_left`, `fold_right` as higher-order functions for `vector<T>` using templates and lambdas.','C','I'],
+  ['Write a `lazy_seq<T>`: infinite sequence defined by a generator lambda. Support `take(n)`, `map`, `filter`, `zip` lazily.",d:\'h\',g:[\'lazy\',\'functional\',\'generators\']}, {t:"Implement a recursive lambda for Fibonacci, first using `std::function` (with overhead), then using `auto& self` C++23 style.','C','I'],
+  ['Write a `partial(f, args...)` function that fixes the first N arguments of `f`, returning a function needing the rest.','C','I'],
+  ['Implement a `retry(n, f)` combinator: calls `f()` up to `n` times until it doesn\'t throw, re-throwing the last exception.','C','I'],
+  ['Write a `memoize_recursive` that memoizes a function that calls itself (the memoization must cover recursive calls too).",d:\'h\',g:[\'memoize\',\'recursion\',\'lambdas\']}, {t:"Implement a `debounce(f, ms)` wrapper: `f` only executes if not called again within `ms` milliseconds.",d:\'h\',g:[\'functional\',\'chrono\',\'debounce\']}, {t:"Write a `Signal<void(Args...)>` class: `connect(callback)` returns a token, `emit(args...)` calls all, `disconnect(token)` removes.','C','I']
+  ]
+},
+{
+  id:'m15',phase:2,num:'15',icon:'⚠️',
+  title:'Exception Handling & Error Handling',
+  desc:'try/catch/throw, exception safety, std::expected, error_code, noexcept.',
+  qs:[
+  ['What is exception handling? Write a function that throws `std::invalid_argument` and catches it.','T','I'],
+  ['What is exception safety? Define the 4 exception safety guarantees: nothrow, strong, basic, no-guarantee.','T','I'],
+  ['What is stack unwinding? What happens to local objects when an exception propagates?','T','I'],
+  ['What is `noexcept`? How does the compiler use it? What happens if a `noexcept` function throws?','T','I'],
+  ['What is `std::terminate`? When is it called? How do you set a custom terminate handler?','T','I'],
+  ['What is a catch-all handler `catch(...)`? Is it good practice? What can you do with the caught exception?','T','I'],
+  ['What is exception rethrowing `throw;`? When would you use it?','T','I'],
+  ['What is the difference between throwing by value and by reference in a catch block?','T','I'],
+  ['What is `std::exception_ptr`? How does it allow storing and rethrowing exceptions across threads?','T','I'],
+  ['What is a function-try-block? Where is it useful (constructor initializer list exceptions)?','T','I'],
+  ['What is RAII and why is it the key to exception safety? Show a RAII file handle class.','T','I'],
+  ['What is `std::error_code`? When would you use it over exceptions?','T','I'],
+  ['What is `std::expected<T, E>` (C++23)? Implement a parsing function that returns it.','T','I'],
+  ['Compare exceptions, error codes, and `std::expected` for error handling. When is each appropriate?','T','I'],
+  ['What is exception neutral code? Why is it harder to write than exception safe code?','T','I'],
+  ['What is the exception hierarchy in `<stdexcept>`? Name all standard exception types.','T','I'],
+  ['Write a custom exception class hierarchy with `what()` overridden.','T','I'],
+  ['What is `std::nested_exception`? When is it useful?','T','I'],
+  ['What is a destructor that throws? Why is it almost always a catastrophic bug?','T','I'],
+  ['Show how to implement the strong exception guarantee for a `push_back` on a custom vector.','T','I'],
+  ['Write a `Result<T,E>` type that replaces exceptions. Chain operations with `.map()`, `.and_then()`, `.map_err()`.','C','I'],
+  ['Implement a `TransactionalVector<T>`: `push_back` has strong exception guarantee — if it fails, vector is unchanged.",d:\'h\',g:[\'exception-safety\',\'strong-guarantee\',\'RAII\']}, {t:"Write a custom exception hierarchy for a JSON parser with distinct types for `ParseError`, `TypeMismatch`, `OutOfRange`.','C','I'],
+  ['Write a `ScopeExit` with three variants: `on_exit`, `on_success`, `on_failure` — each runs only in the right condition.",d:\'h\',g:[\'RAII\',\'exceptions\',\'scope-guard\']}, {t:"Implement a `try_catch_all(f)` that catches any exception and returns it as `std::exception_ptr`. Then `rethrow_if(ptr)`.','C','I'],
+  ['Write a JSON parser that uses exceptions internally but exposes a `parse(string) -> Result<Json, ParseError>` interface.",d:\'h\',g:[\'parsing\',\'JSON\',\'error-handling\']}, {t:"Implement a \'poison pill\' cancellation token: any code holding the token can call `cancel()`. Waiting code gets `CancelledException`.",d:\'h\',g:[\'cancellation\',\'exceptions\',\'threading\']}, {t:"Write a `finally(f)` function that takes a callable and ensures it runs regardless of exception or normal return (like Java finally).','C','I'],
+  ['Catch divide-by-zero with try/catch.','C','I'],
+  ['Noexcept swap function.','C','I'],
+  ['Assert invariant in class.','C','I'],
+  ['Custom exception hierarchy.','C','I'],
+  ['Stack trace simulation with __func__.','C','I'],
+  ['Unit test factorial with simple framework.','C','I'],
+  ['CMakeLists for multi-target project.','C','I'],
+  ['Conditional compilation for debug logs.','C','I'],
+  ['UBSan demo with signed overflow.','C','I'],
+  ['ASan leak detection code.','C','I'],
+  ['Valgrind-friendly alloc/free.','C','I'],
+  ['Gtest-like test suite.','C','I'],
+  ['Exception safety strong guarantee.','C','I'],
+  ['Stack overflow recursion test.','C','I'],
+  ['Custom assert macro.','C','I'],
+  ['TSan data race demo/fix.','C','I'],
+  ['Macro for logging file/line.','C','I'],
+  ['Build with -fsanitize=address.','C','I'],
+  ['NDEBUG disable asserts.','C','I'],
+  ['Exception spec deprecated demo.','C','I'],
+  ['Rethrow with throw;.','C','I']
+  ]
+},
+{
+  id:'m16',phase:2,num:'16',icon:'🔒',
+  title:'Concurrency & Multithreading',
+  desc:'std::thread, mutex, condition_variable, atomic, memory_order, futures.',
+  qs:[
+  ['What is a thread? Create a `std::thread` that computes the sum of a large array. Join it.','T','I'],
+  ['What is a data race? Write code that causes one and explain why it\'s undefined behavior.','T','I'],
+  ['What is `std::mutex`? Write a thread-safe counter using `std::mutex` and `std::lock_guard`.','T','I'],
+  ['What is `std::unique_lock` vs `std::lock_guard`? When would you use `unique_lock`?','T','I'],
+  ['What is a deadlock? Write code that creates one with two mutexes. How do you prevent it?','T','I'],
+  ['What is `std::condition_variable`? Implement a producer-consumer queue using it.','T','I'],
+  ['What is `std::atomic`? What is the difference between `atomic<int>` and `volatile int`?','T','I'],
+  ['What is memory ordering? Explain `relaxed`, `acquire`, `release`, `acq_rel`, `seq_cst`.','T','I'],
+  ['What is `std::async`? What is the difference between `std::launch::async` and `std::launch::deferred`?','T','I'],
+  ['What is `std::future` and `std::promise`? Write code passing a result from one thread to another.','T','I'],
+  ['What is `std::packaged_task`? How does it wrap a callable for async execution?','T','I'],
+  ['What is a thread pool? Implement a simple one using `std::thread`, `std::queue`, and `std::mutex`.','T','I'],
+  ['What is `std::shared_mutex`? Implement a readers-writer lock.','T','I'],
+  ['What is `std::call_once`? Use it to implement thread-safe singleton initialization.','T','I'],
+  ['What is the ABA problem? When does it occur in lock-free programming?','T','I'],
+  ['What is `std::latch` and `std::barrier` (C++20)? Write a parallel algorithm using `std::barrier`.','T','I'],
+  ['What is `std::jthread` (C++20)? How does it improve over `std::thread`?','T','I'],
+  ['What is a false sharing? How does cache line size affect concurrent performance?','T','I'],
+  ['Implement a concurrent hash map using fine-grained locking.','T','I'],
+  ['What is a spinlock? Implement one using `std::atomic_flag`. When is it better than a mutex?','T','I'],
+  ['Implement a thread-safe `BoundedQueue<T,N>` with `push` (blocks when full) and `pop` (blocks when empty) using `condition_variable`.",d:\'h\',g:[\'condition_variable\',\'mutex\',\'producer-consumer\']}, {t:"Write a thread pool with N workers, `submit(f) -> future<T>`, `drain()`, and graceful `shutdown()`.",d:\'h\',g:[\'thread-pool\',\'future\',\'packaged_task\']}, {t:"Implement a `ReadWriteLock` from scratch: unlimited concurrent readers, exclusive writer, writer-preference.",d:\'h\',g:[\'rwlock\',\'mutex\',\'condition_variable\']}, {t:"Write a lock-free stack using `std::atomic<Node*>` and `compare_exchange_weak`. Handle ABA with generation counter.",d:\'h\',g:[\'lock-free\',\'atomic\',\'CAS\',\'ABA\']}, {t:"Implement a `Barrier` (like `std::barrier`): N threads call `arrive_and_wait()`, all unblock when count reaches N.",d:\'h\',g:[\'barrier\',\'condition_variable\',\'threads\']}, {t:"Write a `parallel_transform(input, output, f, n_threads)` that divides work into chunks across N threads.','C','I'],
+  ['Implement a `Pipeline` with 3 stages Producer→Processor→Consumer, each in its own thread, connected by `BoundedQueue`s.",d:\'h\',g:[\'pipeline\',\'threads\',\'queues\']}, {t:"Write a `FutureAll<T>(vector<future<T>>)` that returns a `future<vector<T>>` completing when all inputs complete.",d:\'h\',g:[\'future\',\'async\',\'concurrency\']}, {t:"Implement a `TimedMutex` that throws if the lock cannot be acquired within a timeout.','C','I'],
+  ['Producer consumer with condvar.','C','I'],
+  ['Thread pool task queue.','C','I'],
+  ['Atomic counter.','C','I'],
+  ['Lock free stack.','C','I'],
+  ['ABA fix with seq.','C','I'],
+  ['Reader writer lock.','C','I'],
+  ['Future then chain.','C','I'],
+  ['Async task.','C','I'],
+  ['Barrier sync.','C','I'],
+  ['Work steal queue.','C','I'],
+  ['Mutex hierarchy.','C','I'],
+  ['Priority inversion fix.','C','I'],
+  ['Thread local counter.','C','I'],
+  ['Latch countdown.','C','I'],
+  ['Semaphore bounded buffer.','C','I'],
+  ['Stop token cancel.','C','I'],
+  ['Parallel accumulate.','C','I'],
+  ['Jthread joinable.','C','I'],
+  ['Hazard pointer.','C','I'],
+  ['RCU sim.','C','I'],
+  ['Coop cancel coroutines.','C','I'],
+  ['Spinlock fair.','C','I'],
+  ['Compare exchange loop.','C','I'],
+  ['Memory order acq_rel.','C','I'],
+  ['Seq_cst barrier.','C','I'],
+  ['Par sort std.','C','I'],
+  ['TSan race fix.','C','I'],
+  ['Deadlock detector.','C','I'],
+  ['Condition any.','C','I'],
+  ['Yield spin.','C','I'],
+  ['Affinity pin.','C','I']
+  ]
+},
+{
+  id:'m17',phase:2,num:'17',icon:'🧠',
+  title:'Smart Pointers & Memory Management',
+  desc:'unique_ptr, shared_ptr, weak_ptr, custom deleters, allocators.',
+  qs:[
+  ['Custom allocator for vector.','C','I'],
+  ['Arena allocator fixed pool.','C','I'],
+  ['PMR vector<string> polymorphic.','C','I'],
+  ['Small vector opt with SSO.','C','I'],
+  ['Cache line align struct.','C','I'],
+  ['False sharing fix with padding.','C','I'],
+  ['Benchmark move vs copy.','C','I'],
+  ['Placement new array.','C','I'],
+  ['Rebind allocator.','C','I'],
+  ['Monotonic allocator.','C','I'],
+  ['Buddy allocator sim.','C','I'],
+  ['Raw memchr/strcpy perf.','C','I'],
+  ['Bitset custom.','C','I'],
+  ['SIMD add with intrinsics.','C','I'],
+  ['Cache prefetch demo.','C','I'],
+  ['Branchless abs.','C','I'],
+  ['Data-oriented particle sim.','C','I'],
+  ['Allocator-aware container.','C','I'],
+  ['Leak detector.','C','I'],
+  ['Valgrind suppress.','C','I'],
+  ['Perf with perf tool.','C','I'],
+  ['Hot/cold functions.','C','I'],
+  ['Unroll loop.','C','I'],
+  ['Vectorization auto.','C','I'],
+  ['Memory pool gen.','C','I'],
+  ['Huge pages sim.','C','I'],
+  ['NUMA aware alloc.','C','I']
+  ]
+},
+{
+  id:'m18',phase:2,num:'18',icon:'🔬',
+  title:'Metaprogramming & Type Traits',
+  desc:'SFINAE, enable_if, if constexpr, type_traits, constexpr, consteval.',
+  qs:[
+  ['What is template metaprogramming (TMP)? Write a compile-time `Fibonacci<N>` using template recursion.','T','I'],
+  ['What is a type trait? Explain `std::is_integral`, `std::is_pointer`, `std::is_base_of`.','T','I'],
+  ['What is `std::conditional_t`? Use it to select between two types at compile time.','T','I'],
+  ['What is `std::void_t`? Write a type trait that detects if a type has a `begin()` method.','T','I'],
+  ['What is `std::declval` and when is it necessary in trait definitions?','T','I'],
+  ['What is a `constexpr` function? Write a compile-time sort of a `constexpr` array.','T','I'],
+  ['What is `consteval`? How does it differ from `constexpr`? Write a compile-time string hash.','T','I'],
+  ['What is `std::integer_sequence`? Use it to implement `apply(tuple, f)` that calls `f` with tuple elements.','T','I'],
+  ['What is `std::tuple`? Write a function `print_tuple` that prints every element using fold expressions.','T','I'],
+  ['What is a fold expression? Write variadic `sum`, `all_of`, and `any_of` using fold expressions.','T','I'],
+  ['What is `std::invoke_result_t`? Use it to write a type-safe wrapper around `std::invoke`.','T','I'],
+  ['What is `std::is_same_v`? Write a function enabled only when two template parameters are the same type.','T','I'],
+  ['What is tag dispatch? Implement an iterator advance function using tag dispatch for iterator categories.','T','I'],
+  ['What is `if constexpr` in a class template context? Write a `serialize` function that branches by type.','T','I'],
+  ['What is `std::variant` with `std::visit`? Write a double-dispatch visitor.','T','I'],
+  ['What is `std::type_index`? Write a factory using a `map<type_index, function<Base*()>>`.','T','I'],
+  ['What is `__has_include`? What is `__cpp_concepts`? How do feature-test macros work?','T','I'],
+  ['Write a `detect` idiom implementation from scratch.','T','I'],
+  ['What is the difference between `using` and `typedef` for template aliases?','T','I'],
+  ['Implement `std::make_index_sequence` from scratch using recursive template instantiation.','T','I'],
+  ['Write `is_iterable<T>` — true if T has `begin()` and `end()`. Use it to enable a generic `print` for any container.','C','I'],
+  ['Implement `function_traits<F>` extracting return type, arity, and argument types as a type list from any callable.",d:\'h\',g:[\'TMP\',\'type-traits\',\'callable\']}, {t:"Write a `StaticFor<0,N>(f)` that calls `f<I>()` for I=0..N-1 at compile time using `if constexpr` and recursion.','C','I'],
+  ['Implement a compile-time `constexpr` string hash (FNV-1a) and use it as a non-type template parameter.','C','I'],
+  ['Write `overloaded{...}` helper: combine multiple lambdas into one callable that dispatches on argument type.','C','I'],
+  ['Implement a `type_map<key_val_pairs...>` that maps compile-time keys to types. Support `get<K>(map)` lookup.",d:\'h\',g:[\'TMP\',\'type-map\',\'compile-time\']}, {t:"Write a `serialize` function template: if T has a `to_json()` method, use it; otherwise use field-by-field reflection with Boost.Describe or manual trait.",d:\'h\',g:[\'serialization\',\'SFINAE\',\'reflection\']}, {t:"Implement a compile-time `regex` that matches a fixed pattern at compile time using template recursion.",d:\'h\',g:[\'TMP\',\'compile-time\',\'regex\']}, {t:"Write an `Enum` class that supports iteration over all values using a `values()` constexpr array.','C','I'],
+  ['Concept Regular, use in container.','C','I'],
+  ['Constexpr vector fixed.','C','I'],
+  ['Type list variadic.','C','I'],
+  ['TMP sort types.','C','I'],
+  ['If constexpr branch.','C','I'],
+  ['Consteval hash.','C','I'],
+  ['Fold unpack tuple.','C','I'],
+  ['CPO swap.','C','I'],
+  ['Customization point sort.','C','I'],
+  ['Traits transform.','C','I'],
+  ['SFINAE chain.','C','I'],
+  ['Detection id.','C','I'],
+  ['Constexpr string.','C','I'],
+  ['MP generate sequence.','C','I'],
+  ['Policy based data struct.','C','I'],
+  ['Expr sfinae.','C','I'],
+  ['Ranges custom view.','C','I'],
+  ['Constexpr allocator.','C','I'],
+  ['Var template recurse.','C','I'],
+  ['Concept hierarchy.','C','I'],
+  ['Auto concept param.','C','I'],
+  ['MP filter.','C','I'],
+  ['Constinit array.','C','I'],
+  ['Relax consteval.','C','I'],
+  ['Tuple like variadic.','C','I'],
+  ['Index sequence.','C','I'],
+  ['MP find if.','C','I'],
+  ['Nested namespace.','C','I'],
+  ['Requires expr.','C','I'],
+  ['Short circuit concept.','C','I'],
+  ['Constexpr sort.','C','I'],
+  ['MP factorial.','C','I']
+  ]
+},
+{
+  id:'m19',phase:2,num:'19',icon:'🆕',
+  title:'Modern C++11/14/17/20/23',
+  desc:'Structured bindings, std::optional, variant, any, string_view, modules, coroutines.',
+  qs:[
+  ['Lambda capture by ref/value, sort vector.','C','I'],
+  ['Auto and range-for on container.','C','I'],
+  ['Enum class Color, strong typing.','C','I'],
+  ['Unique_ptr vector of ptrs.','C','I'],
+  ['Move semantic string concat.','C','I'],
+  ['Constexpr factorial.','C','I'],
+  ['Structured bindings pair/tuple.','C','I'],
+  ['String_view substring search.','C','I'],
+  ['Optional<int> safe divide.','C','I'],
+  ['Variant<int,string> visitor.','C','I'],
+  ['Span on array slice.','C','I'],
+  ['Concept Numeric<T>.','C','I'],
+  ['Ranges sort filter.','C','I'],
+  ['Format string C++20.','C','I'],
+  ['Expected<int,string> divide.','C','I'],
+  ['Jthread detached.','C','I'],
+  ['Coroutine generator (C++20).','C','I'],
+  ['Constinit global.','C','I'],
+  ['Modules hello.ixx (if compiler supports).','C','I'],
+  ['[[nodiscard]] function.','C','I'],
+  ['Std::print hello world.','C','I']
+  ]
+},
+{
+  id:'m20',phase:2,num:'20',icon:'🗂️',
+  title:'Data Structures & Algorithms',
+  desc:'Linked list, tree, graph, hash table, sorting, searching, complexity.',
+  qs:[
+  ['Implement a cache-friendly hash table with open addressing and robin-hood hashing.','T','I'],
+  ['Implement a B-tree with node splitting and merging. Explain its cache advantages over `std::map`.','T','I'],
+  ['Implement a van Emde Boas tree and explain its O(log log U) query time.','T','I'],
+  ['Implement a skip list with thread-safe concurrent reads using a seqlock.','T','I'],
+  ['Implement a Fibonacci heap and use it to speed up Dijkstra\'s algorithm.','T','I'],
+  ['Implement a suffix array with O(n log n) construction using prefix doubling.','T','I'],
+  ['Implement Aho-Corasick multi-pattern string matching algorithm.','T','I'],
+  ['Implement a trie with compressed paths (Patricia/radix tree).','T','I'],
+  ['Implement a segment tree with lazy propagation supporting range sum and range assignment.','T','I'],
+  ['Implement a persistent segment tree. Explain its memory and time complexity.','T','I'],
+  ['Implement a disjoint set union (DSU) with path compression and union by rank.','T','I'],
+  ['Implement a k-d tree for nearest-neighbor search in 3D space.','T','I'],
+  ['Implement Tarjan\'s SCC algorithm and Kosaraju\'s SCC algorithm. Compare them.','T','I'],
+  ['Implement the Bellman-Ford algorithm with negative cycle detection.','T','I'],
+  ['Implement Floyd-Warshall and explain its use cases vs Dijkstra\'s.','T','I'],
+  ['Implement a convex hull algorithm (Graham scan and Andrew\'s monotone chain).','T','I'],
+  ['Implement a fast modular exponentiation and Miller-Rabin primality test.','T','I'],
+  ['Implement a suffix automaton for substring search in O(n) construction.','T','I'],
+  ['Implement a treap (tree+heap) with implicit key for sequence operations.','T','I'],
+  ['Implement an LRU cache using `std::list` and `std::unordered_map` in O(1) get/put.','T','I'],
+  ['Implement a lock-free MPMC queue using a ring buffer and atomic operations.','T','I'],
+  ['Implement a parallel merge sort using `std::thread` and measure speedup.','T','I'],
+  ['Implement a cache-oblivious matrix transpose and show its TLB advantage.','T','I'],
+  ['Implement a bitset with SIMD popcount for fast set intersection.','T','I'],
+  ['Implement KMP string matching and explain the failure function construction.','T','I'],
+  ['Implement a min-max heap supporting O(1) min and max queries.','T','I'],
+  ['Implement a BK-tree for fuzzy string search by edit distance.','T','I'],
+  ['Implement a bloom filter with multiple hash functions and configurable false-positive rate.','T','I'],
+  ['Implement a concurrent open-addressing hash map with fine-grained locking.','T','I'],
+  ['Profile and optimize a matrix multiplication to approach BLAS-level performance using cache blocking and SIMD.','T','I'],
+  ['Implement a red-black tree with `insert`, `delete`, `find`, and in-order traversal. Verify BST property after each operation.",d:\'h\',g:[\'red-black-tree\',\'BST\',\'balancing\']}, {t:"Implement an AVL tree with `insert`, `delete`, self-balancing via rotations, and height verification.",d:\'h\',g:[\'AVL\',\'BST\',\'rotations\']}, {t:"Implement a `SegmentTree<T>` with lazy propagation: range sum query and range add update in O(log n).",d:\'h\',g:[\'segment-tree\',\'lazy\',\'range-query\']}, {t:"Write a `FenwickTree` (BIT) for range sum and point update in O(log n). Add range update support.','C','I'],
+  ['Implement a `DisjointSet` (DSU) with union by rank and path compression. Use it to find connected components.','C','I'],
+  ['Write a `Treap` (randomized BST with heap property) with `insert`, `delete`, `split`, `merge`.",d:\'h\',g:[\'treap\',\'BST\',\'randomized\']}, {t:"Implement a k-D tree for 3D points supporting `insert`, `nearest_neighbor(point)`, `range_query(box)`.",d:\'h\',g:[\'kd-tree\',\'spatial\',\'nearest-neighbor\']}, {t:"Write a `SuffixArray` in O(n log n) + a `LCPArray` in O(n). Implement `count_occurrences(pattern)` using binary search.",d:\'h\',g:[\'suffix-array\',\'LCP\',\'strings\']}, {t:"Implement a `BloomFilter<N, K>` with K hash functions. Compute false-positive rate empirically.','C','I'],
+  ['Write a `MinStack` supporting `push`, `pop`, `top`, `getMin` all in O(1) time and O(n) space.','C','I']
+  ]
+},
+{
+  id:'m21',phase:3,num:'21',icon:'💥',
+  title:'Undefined Behavior & Abstract Machine',
+  desc:'UB taxonomy, strict aliasing, sequencing, signed overflow, compiler assumptions.',
+  qs:[
+  ['What is the C++ abstract machine? How does it relate to actual hardware execution?','T','A'],
+  ['List 20 different examples of undefined behavior in C++. For each, explain what could realistically go wrong.','T','A'],
+  ['What is the difference between undefined behavior, unspecified behavior, and implementation-defined behavior?','T','A'],
+  ['What is strict aliasing? Why is `*(int*)&f` for a float `f` undefined behavior even if the sizes match?','T','A'],
+  ['What is the signed integer overflow UB? How does GCC exploit it to optimize loops?','T','A'],
+  ['What is out-of-lifetime access? When does an object\'s lifetime begin and end precisely?','T','A'],
+  ['What is the `volatile` keyword? What does it guarantee? What does it NOT guarantee regarding concurrency?','T','A'],
+  ['What is the C++ memory model? Define sequenced-before, synchronizes-with, and happens-before.','T','A'],
+  ['What is a data race according to the C++ standard? How is it different from a race condition?','T','A'],
+  ['Bitfield endian test.','C','A'],
+  ['Padding poison.','C','A'],
+  ['Strict aliasing violate/fix.','C','A'],
+  ['Volatile mmio sim.','C','A'],
+  ['Trap signal handler.','C','A'],
+  ['Sigsegv catch.','C','A'],
+  ['Freestanding hello.','C','A'],
+  ['Noexcept spec.','C','A'],
+  ['UB lifetime extend.','C','A'],
+  ['Provenance ptr.','C','A'],
+  ['Byte manip struct.','C','A'],
+  ['Packed struct crc.','C','A'],
+  ['Unaligned access.','C','A'],
+  ['Reinterpret endian swap.','C','A'],
+  ['Std::launder.','C','A'],
+  ['Trap rep.','C','A'],
+  ['Setjmp longjmp.','C','A'],
+  ['Atomics asm.','C','A'],
+  ['Inline asm add.','C','A'],
+  ['Abi mangled name.','C','A'],
+  ['Extern c func.','C','A'],
+  ['Vtable inspect.','C','A'],
+  ['Itanium abi.','C','A'],
+  ['Freestanding alloc.','C','A'],
+  ['No rtti.','C','A'],
+  ['UB optimizer.','C','A'],
+  ['Asan poison.','C','A'],
+  ['Ubsan trap.','C','A'],
+  ['Fuzz afl.','C','A'],
+  ['Syscall wrap.','C','A'],
+  ['Mmap file.','C','A']
+  ]
+},
+{
+  id:'m22',phase:3,num:'22',icon:'🧱',
+  title:'Memory Model & Cache Architecture',
+  desc:'Memory ordering, happens-before, acquire/release, seq_cst, false sharing.',
+  qs:[
+  ['Explain the CPU memory hierarchy: L1, L2, L3, RAM, disk. What are typical latencies for each?','T','A'],
+  ['What is a cache line? What is its typical size? How does it affect data structure design?','T','A'],
+  ['What is false sharing? Write a benchmark demonstrating false sharing between two threads and fix it.','T','A'],
+  ['What is cache-oblivious algorithm? Why does matrix transposition in a naive layout trash the cache?','T','A'],
+  ['What is data-oriented design? Refactor an array-of-structs to struct-of-arrays for cache efficiency.','T','A'],
+  ['What is prefetching? How does `__builtin_prefetch` work? When does manual prefetching help?','T','A'],
+  ['What is the MESI cache coherence protocol? Explain each state and the transitions.','T','A'],
+  ['What is a memory barrier? How does `std::atomic_thread_fence` map to hardware instructions on x86 vs ARM?','T','A'],
+  ['What is `std::memory_order_relaxed`? Write a correct use case where it\'s safe.','T','A'],
+  ['What is `std::memory_order_acquire` and `std::memory_order_release`? Implement a simple message-passing protocol.','T','A'],
+  ['What is `std::memory_order_seq_cst`? What hardware instruction does it generate on x86? On ARM?','T','A'],
+  ['What is the store buffer? What is the invalidation queue? How do they cause weak memory model effects?','T','A'],
+  ['What is a lock-free data structure? Implement a lock-free stack using `std::atomic` with CAS.','T','A'],
+  ['What is ABA problem in lock-free programming? How does a tagged pointer or hazard pointer solve it?','T','A'],
+  ['What is a hazard pointer? Implement safe reclamation in a lock-free structure.','T','A'],
+  ['What is epoch-based reclamation? How does it differ from hazard pointers?','T','A'],
+  ['What is `std::atomic<T>::compare_exchange_weak` vs `compare_exchange_strong`? Why prefer weak in a loop?','T','A'],
+  ['What is a seqlock? Implement a read-optimized lock for a small data structure.','T','A'],
+  ['What is branch prediction? How does branch misprediction hurt performance? How do you help the predictor?','T','A'],
+  ['What is SIMD? Write a dot product using Intel SSE2 intrinsics and compare performance to scalar.','T','A'],
+  ['What is memory bandwidth? How do you measure it and how does it become a bottleneck?','T','A'],
+  ['What is NUMA? How does `numa_alloc_onnode` affect a multithreaded workload?','T','A'],
+  ['What is the difference between coherence and consistency in memory systems?','T','A'],
+  ['What is `std::hardware_destructive_interference_size`? Use it to pad a structure.','T','A'],
+  ['Implement a ring buffer (SPSC queue) that is lock-free and wait-free for single producer/consumer.','T','A'],
+  ['What is write combining? How does write-combining memory affect DMA performance?','T','A'],
+  ['What is memory-mapped I/O vs port I/O? How does `volatile` relate to MMIO registers?','T','A'],
+  ['What is transparent huge pages? How do they affect TLB pressure?','T','A'],
+  ['What is memory tagging (MTE on ARM)? How does it help catch use-after-free?','T','A'],
+  ['Implement Michael-Scott queue, a classic lock-free MPMC queue, and explain each CAS operation.','T','A']
+  ]
+},
+{
+  id:'m23',phase:3,num:'23',icon:'⚙️',
+  title:'ABI, Linkage & Binary Internals',
+  desc:'Name mangling, vtable layout, ELF, ODR, linkage types, dllexport.',
+  qs:[
+  ['What is an ABI? What is the Itanium ABI? What does it specify?','T','A'],
+  ['What is name mangling? Use `c++filt` to demangle a mangled C++ symbol.','T','A'],
+  ['What is a calling convention? Explain `__cdecl`, `__stdcall`, `__fastcall`. Which registers pass arguments on x86-64 System V?','T','A'],
+  ['What is the red zone on x86-64? How does it affect signal handlers?','T','A'],
+  ['What is the ELF format? Explain sections: `.text`, `.data`, `.bss`, `.rodata`, `.plt`, `.got`.','T','A'],
+  ['What is a PLT (Procedure Linkage Table)? How does dynamic linking work step by step?','T','A'],
+  ['What is RTTI? How is the `type_info` object laid out? What is the overhead?','T','A'],
+  ['What is the vtable layout? What is the `vptr` and where in the object does it live?','T','A'],
+  ['What is virtual inheritance vtable? How does the virtual base class offset get stored?','T','A'],
+  ['What is an ABI break? Give 3 changes to a C++ class that break ABI.','T','A'],
+  ['What is `extern \\','T','A'],
+  ['`? What does it change about linkage and name mangling?','T','A'],
+  ['What is `__attribute__((visibility(\\','T','A'],
+  [')))` vs `default`? How does it affect shared library size?','T','A'],
+  ['What is link-time optimization (LTO)? How does it enable cross-translation-unit inlining?','T','A'],
+  ['What is `[[gnu::section(\\','T','A']
+  ]
+},
+{
+  id:'m24',phase:3,num:'24',icon:'🏭',
+  title:'Custom Allocators & Memory',
+  desc:'std::allocator, pmr, memory_resource, pool allocator, arena allocator.',
+  qs:[
+  ['What is the C++ allocator concept? What requirements must a type satisfy to be an allocator?','T','A'],
+  ['What is `std::allocator_traits`? Why is it the correct way to use an allocator?','T','A'],
+  ['Implement a simple pool allocator for fixed-size objects. Benchmark it vs `new`/`delete`.','T','A'],
+  ['What is an arena (bump/linear) allocator? Implement one and explain its trade-offs.','T','A'],
+  ['What is `std::pmr` (polymorphic memory resources)? What is `std::pmr::monotonic_buffer_resource`?','T','A'],
+  ['What is `std::pmr::unsynchronized_pool_resource`? When would you use it over a monotonic resource?','T','A'],
+  ['Implement a `std::pmr::memory_resource` that logs every allocation and deallocation.','T','A'],
+  ['What is a slab allocator? How does the Linux kernel slab allocator differ from a simple pool allocator?','T','A'],
+  ['What is memory fragmentation? How does fragmentation affect long-running C++ servers?','T','A'],
+  ['What is `tcmalloc`? What is `jemalloc`? How do they compare to the system `malloc`?','T','A'],
+  ['What is `operator new` overloading? Overload global `new` to track peak memory usage.','T','A'],
+  ['What is aligned memory allocation? Use `std::aligned_alloc` and `std::align` with custom alignment.','T','A'],
+  ['What is `__builtin_expect`? How does it interact with branch prediction in allocation hot paths?','T','A'],
+  ['What is a stack allocator with high-water mark? Implement one for temporary allocations in a frame.','T','A'],
+  ['What is an intrusive linked list? Implement a free list allocator using one.','T','A'],
+  ['What is memory poisoning (as in AddressSanitizer)? How do you add `ASAN_POISON_MEMORY_REGION` to an allocator?','T','A'],
+  ['What is a power-of-two size class allocator? Why does it reduce fragmentation?','T','A'],
+  ['What is small buffer optimization (SBO)? Implement a string with SBO (small string optimization).','T','A'],
+  ['What is `std::allocator<void>`? What is its purpose since C++17 deprecation?','T','A'],
+  ['Implement a lock-free memory allocator using `std::atomic` and a free list.','T','A'],
+  ['What is defragmentation? Can it be done at runtime in C++? What is compacting GC?','T','A'],
+  ['What is huge TLB pages for allocators? How does jemalloc request huge pages from the OS?','T','A'],
+  ['What is `mallopt(M_MXFAST, 0)`? How does fine-tuning glibc malloc affect performance?','T','A'],
+  ['Implement a double-ended stack allocator (DESA) used in game engines.','T','A'],
+  ['What is `std::destroy_at`, `std::construct_at`, `std::uninitialized_copy`? Use them in a custom allocator.','T','A'],
+  ['What is the difference between `allocate_at_least` (C++23) and `allocate`?','T','A'],
+  ['What is a Buddy system allocator? Implement a basic one.','T','A'],
+  ['What is memory-mapped allocator? Implement one using `mmap` on Linux.','T','A'],
+  ['What is `MADV_HUGEPAGE` and `MADV_FREE`? When do you advise the kernel on memory usage?','T','A'],
+  ['Benchmark five different allocators: system malloc, pool, arena, pmr-pool, and jemalloc on a real workload.','T','A'],
+  ['Implement `ArenaAllocator` conforming to the C++ allocator requirements. Plug into `std::vector<int, ArenaAllocator<int>>`.",d:\'h\',g:[\'allocator\',\'arena\',\'PMR\']}, {t:"Write a `PoolAllocator<T,BlocksPerSlab>` using slab allocation. Benchmark against `std::allocator` for 5M alloc/free pairs.",d:\'h\',g:[\'pool\',\'slab\',\'benchmark\']}, {t:"Implement a `MonotonicResource` inheriting `std::pmr::memory_resource` with fallback to `new_delete_resource`. Use with `pmr::vector`.",d:\'h\',g:[\'PMR\',\'memory_resource\',\'C++17\']}, {t:"Write a `DebugAllocator` wrapping another allocator: tracks live allocations, detects double-free and use-after-free by poisoning freed memory.",d:\'h\',g:[\'debug\',\'allocator\',\'asan\']}, {t:"Implement small string optimization from scratch: 15-byte inline buffer, seamless fallback to heap, correct move semantics.",d:\'h\',g:[\'SSO\',\'string\',\'move\']}, {t:"Write a `BuddyAllocator` that manages a 1MB pool: split and merge power-of-2 blocks on alloc/free.",d:\'h\',g:[\'buddy\',\'allocator\',\'fragmentation\']}, {t:"Implement a thread-local `FreeList` allocator: each thread has its own free list, minimizing contention.",d:\'h\',g:[\'thread-local\',\'free-list\',\'allocator\']}, {t:"Write an allocator that uses `mmap` for large allocations and a pool for small ones, reporting fragmentation on demand.",d:\'h\',g:[\'mmap\',\'allocator\',\'hybrid\']}, {t:"Implement a `StackAllocator` with high-water-mark reset: allocate from a thread stack buffer, release all with one pointer bump.','C','A']
+  ]
+},
+{
+  id:'m25',phase:3,num:'25',icon:'🚦',
+  title:'Lock-Free & Advanced Concurrency',
+  desc:'Lock-free queue, hazard pointers, epoch reclamation, seqlock.',
+  qs:[
+  ['Friend injection edge case.','C','A'],
+  ['Lock-free stack.','C','A'],
+  ['Lock-free queue.','C','A'],
+  ['Hazard pointer demo.','C','A'],
+  ['Wait-free queue (conceptual).','C','A'],
+  ['Lock-free ring buffer.','C','A'],
+  ['Shared memory lock-free queue.','C','A'],
+  ['Signal handling edge cases.','C','A'],
+  ['Lock-free ring buffer (production style).','C','A'],
+  ['Lock-free job system.','C','A']
+  ]
+},
+{
+  id:'m26',phase:3,num:'26',icon:'🌐',
+  title:'Network Programming & Async I/O',
+  desc:'POSIX sockets, epoll, IOCP, asio, coroutines for async, HTTP.',
+  qs:[
+  ['Implement a TCP server that handles 10,000 concurrent connections using `epoll`.','T','A'],
+  ['Implement a UDP-based reliable transport protocol with sequence numbers and retransmission.','T','A'],
+  ['What is `io_uring`? Implement an echo server using `io_uring` without threads.','T','A'],
+  ['What is Boost.Asio? Implement an HTTP/1.1 chunked transfer encoding parser using it.','T','A'],
+  ['What is the Proactor vs Reactor pattern? Implement both for a simple echo server.','T','A'],
+  ['Implement TLS handshake from scratch using OpenSSL\'s BIO abstraction.','T','A'],
+  ['What is HTTP/2 multiplexing? Implement HPACK header compression.','T','A'],
+  ['What is a coroutine-based networking stack? Implement one using C++20 coroutines.','T','A'],
+  ['Implement a DNS resolver that handles both A and AAAA records.','T','A'],
+  ['What is a zero-copy send using `sendfile` and `splice` on Linux?','T','A'],
+  ['Implement a connection pool with health checks and automatic reconnection.','T','A'],
+  ['What is `SO_REUSEPORT`? Implement a multi-process TCP server using it.','T','A'],
+  ['Implement binary framing protocol (like protobuf wire format) from scratch.','T','A'],
+  ['What is QUIC? Implement a simplified QUIC stream abstraction in C++.','T','A'],
+  ['Implement a TCP state machine (SYN, SYN-ACK, ESTABLISHED, etc.) for a userspace TCP stack.','T','A'],
+  ['What is scatter-gather I/O (`readv`/`writev`)? Implement a zero-copy HTTP response.','T','A'],
+  ['Implement rate limiting using token bucket algorithm in a network middleware.','T','A'],
+  ['What is a circuit breaker pattern? Implement one for an HTTP client.','T','A'],
+  ['Implement multiplexed RPC over a single TCP connection using request IDs.','T','A'],
+  ['Implement a WebSocket protocol upgrade and frame parsing from scratch.','T','A'],
+  ['What is TCP keepalive vs application-level heartbeats? Implement both.','T','A'],
+  ['Implement a SOCKS5 proxy server in C++.','T','A'],
+  ['What is `MSG_ZEROCOPY`? Implement a sender that avoids kernel-to-user copy.','T','A'],
+  ['Implement a port scanner using raw sockets and SYN packets.','T','A'],
+  ['What is network namespace? Implement a test harness using network namespaces.','T','A'],
+  ['Implement backpressure in a streaming pipeline using `io_uring` and ring buffers.','T','A'],
+  ['What is DPDK? Explain how kernel bypass networking achieves line-rate packet processing.','T','A'],
+  ['Implement a load balancer that uses consistent hashing for backend selection.','T','A'],
+  ['What is `AF_XDP`? Implement a packet capture tool without libpcap.','T','A'],
+  ['Implement a distributed key-value store with Raft consensus for replication.','T','A']
+  ]
+},
+{
+  id:'m27',phase:3,num:'27',icon:'📊',
+  title:'Performance Engineering & Profiling',
+  desc:'Perf, valgrind, cachegrind, flame graphs, SIMD, branch prediction, PGO.',
+  qs:[
+  ['What is Amdahl\'s Law? How does it limit the speedup from parallelism?','T','A'],
+  ['What is the difference between latency-bound and throughput-bound code? How do you determine which?','T','A'],
+  ['What is `perf stat`? Run it and explain every metric: IPC, branch-misses, cache-misses.','T','A'],
+  ['What is `perf record` + `perf report`? Build a flame graph for a C++ application.','T','A'],
+  ['What is `valgrind --tool=callgrind`? How does it differ from `perf`?','T','A'],
+  ['What is Google Benchmark (`benchmark::State`)? Write a micro-benchmark for `std::unordered_map` vs `absl::flat_hash_map`.','T','A'],
+  ['What is latency hiding? Implement software pipelining in a tight computation loop.','T','A'],
+  ['What is auto-vectorization? Write a loop that auto-vectorizes and one that doesn\'t. Explain the difference.','T','A'],
+  ['Write matrix multiplication using AVX2 256-bit SIMD intrinsics. Measure FLOPs.','T','A'],
+  ['What is loop unrolling? What is loop fusion and loop fission? When does each improve performance?','T','A'],
+  ['What is strength reduction? Show the compiler doing it and manually doing it.','T','A'],
+  ['What is devirtualization? Show a case where the compiler devirtualizes a virtual call.','T','A'],
+  ['What is whole-program optimization vs single-translation-unit optimization?','T','A'],
+  ['What is instruction-level parallelism (ILP)? How do out-of-order CPUs exploit it?','T','A'],
+  ['What is `__builtin_unreachable()`? How does it help the compiler generate better code?','T','A'],
+  ['What is dead store elimination? How can it remove security-critical zeroing of buffers?','T','A'],
+  ['What is `std::hardware_constructive_interference_size`? How do you design cache-friendly structures?','T','A'],
+  ['Implement a fast hash function (FNV-1a, MurmurHash3, xxHash) and benchmark it.','T','A'],
+  ['What is branch-free programming? Rewrite a sorting network without any branches.','T','A'],
+  ['What is scalar replacement of aggregates? How does it eliminate struct temporaries?','T','A'],
+  ['What is LICM (Loop Invariant Code Motion)? Show the compiler doing it and manually doing it.','T','A'],
+  ['What is a throughput wall? How does out-of-order execution buffer hide latency?','T','A'],
+  ['What is `IACA` (Intel Architecture Code Analyzer)? How do you use it to analyze throughput?','T','A'],
+  ['What is PGO (Profile-Guided Optimization)? Walk through a two-pass build and show the gains.','T','A'],
+  ['What is `__attribute__((hot))` and `__attribute__((cold))`? How do they affect code layout?','T','A'],
+  ['Implement SWAR (SIMD Within A Register) to count newlines in a string using 64-bit integers.','T','A'],
+  ['What is a `perf c2c` for detecting false sharing? Run it and interpret the output.','T','A'],
+  ['What is memory bandwidth saturation? How do you determine if your code is memory-bound?','T','A'],
+  ['What is FMA (fused multiply-add)? How do you ensure the compiler uses it for floating point?','T','A'],
+  ['Profile and optimize a real-world JSON parser from ~100MB/s to >1GB/s using all learned techniques.','T','A'],
+  ['Implement matrix multiplication: naive, cache-blocked (tile size = L1/sizeof(float)), and AVX2 SIMD. Measure GFLOP/s for each.",d:\'h\',g:[\'SIMD\',\'cache-blocking\',\'BLAS\',\'benchmark\']}, {t:"Write a JSON parser achieving >500MB/s: eliminate per-character allocations, use SIMD for whitespace/string scanning.",d:\'h\',g:[\'SIMD\',\'parsing\',\'optimization\',\'profiling\']}, {t:"Implement `popcount` four ways: loop, `__builtin_popcount`, SWAR (64-bit tricks), AVX2. Benchmark on 1GB bitset.",d:\'h\',g:[\'SIMD\',\'bitwise\',\'benchmark\',\'popcount\']}, {t:"Write a hash table beating `std::unordered_map` for int keys: open addressing, robin-hood probing, load factor ≤0.75.",d:\'h\',g:[\'hash-table\',\'robin-hood\',\'performance\']}, {t:"Profile a given quadratic string concatenation loop with `perf record`. Fix it using `reserve` + append. Measure 100× speedup.",d:\'h\',g:[\'profiling\',\'perf\',\'strings\',\'optimization\']}, {t:"Implement a branch-free 4-element sorting network using only conditional moves (no if/else).",d:\'h\',g:[\'branchless\',\'sorting-network\',\'SIMD\']}, {t:"Write a cache-oblivious matrix transpose using recursive divide-and-conquer. Measure TLB miss reduction vs naive.",d:\'h\',g:[\'cache-oblivious\',\'transpose\',\'TLB\']}, {t:"Implement `strlen` using SSE2/AVX2: process 16/32 bytes per iteration searching for the null terminator.",d:\'h\',g:[\'SIMD\',\'SSE2\',\'AVX2\',\'strlen\']}, {t:"Write a radix sort for 64-bit integers using 8-bit LSD radix. Show it beats `std::sort` at N > 1M.",d:\'h\',g:[\'radix-sort\',\'benchmark\',\'integers\']}, {t:"Write a micro-benchmark framework using `std::chrono` with warmup, multiple iterations, median latency, and outlier removal.','C','A']
+  ]
+},
+{
+  id:'m28',phase:3,num:'28',icon:'🔐',
+  title:'Security & Exploitation Techniques',
+  desc:'Buffer overflows, format string bugs, ASLR, stack canaries, fuzzing.',
+  qs:[
+  ['What is a stack buffer overflow? Write a vulnerable function and explain how it overwrites the return address.','T','A'],
+  ['What is ASLR (Address Space Layout Randomization)? How does it mitigate exploits? How can it be bypassed?','T','A'],
+  ['What is a stack canary? How does GCC\'s `-fstack-protector-all` implement it?','T','A'],
+  ['What is NX/DEP (No-eXecute / Data Execution Prevention)? How does it prevent shellcode execution?','T','A'],
+  ['What is ROP (Return-Oriented Programming)? Explain gadgets and how they chain to form a payload.','T','A'],
+  ['What is CFI (Control Flow Integrity)? How does Clang\'s `-fsanitize=cfi` enforce it?','T','A'],
+  ['What is format string vulnerability? Write a vulnerable `printf(user_input)` and explain the exploit.','T','A'],
+  ['What is heap overflow? What is heap spray? What is use-after-free exploitation?','T','A'],
+  ['What is a TOCTOU (Time Of Check To Time Of Use) race condition? Write a vulnerable file checker.','T','A'],
+  ['What is integer overflow leading to heap underallocation? Write a vulnerable `calloc(n, size)` wrapper.','T','A'],
+  ['What is `-D_FORTIFY_SOURCE=2`? What checks does it add at compile time and runtime?','T','A'],
+  ['What is `seccomp`? Write a C++ program that restricts its own syscalls using `seccomp-bpf`.','T','A'],
+  ['What is constant-time programming? Implement `memcmp` that doesn\'t leak timing information.','T','A'],
+  ['What is a side-channel attack? Explain Spectre and Meltdown at the C++ level.','T','A'],
+  ['What is `std::crypto` (pending)? What are the current options for cryptography in C++ (libsodium, OpenSSL)?','T','A'],
+  ['Implement a safe integer class that aborts on overflow instead of invoking UB.','T','A'],
+  ['What is PIE (Position Independent Executable)? How does it differ from PIC?','T','A'],
+  ['What is the difference between `strncpy` and `strlcpy`? Why is `strncpy` dangerous?','T','A'],
+  ['What is `realpath` vs `realpath_r`? How do you safely validate file paths to prevent path traversal?','T','A'],
+  ['What is `mlock`? How do you prevent secret key material from being swapped to disk?','T','A'],
+  ['What is SafeStack? How does it separate the stack into safe and unsafe parts?','T','A'],
+  ['What is a fuzzer? Write a simple libFuzzer target for a JSON parser function.','T','A'],
+  ['What is `__attribute__((noescape))`? How does it affect escape analysis and security?','T','A'],
+  ['What is shadow memory in AddressSanitizer? How does it track every byte?','T','A'],
+  ['What is `RELRO` (Relocation Read-Only)? How does full RELRO protect the `.got.plt`?','T','A'],
+  ['What is `PIE` + `ASLR` + `full RELRO` + `stack canary` + `NX` together? What attacks do they collectively mitigate?','T','A'],
+  ['What is a sandbox? Implement a sandboxed subprocess using Linux namespaces and `seccomp`.','T','A'],
+  ['What is the difference between authentication and authorization? Implement a capability-based access control in C++.','T','A'],
+  ['What is `CERT C++ Coding Standard`? List 5 rules from it and explain the bug each prevents.','T','A'],
+  ['Implement a memory-safe string class that proves correct bounds checking through its type system.','T','A'],
+  ['Write a `SafeInt<T>` using `__builtin_add_overflow`, `__builtin_mul_overflow`. Throw on every overflow. Benchmark overhead.','C','A'],
+  ['Implement constant-time `bool secureMemEqual(const void* a, const void* b, size_t n)` that doesn\'t leak timing info.",d:\'h\',g:[\'constant-time\',\'security\',\'crypto\']}, {t:"Write a `secureZero(void* p, size_t n)` that zeroes memory and cannot be dead-code-eliminated by the compiler.','C','A'],
+  ['Write a program demonstrating a stack buffer overflow, then compile with `-fstack-protector-all` and show the canary catching it.",d:\'h\',g:[\'stack-overflow\',\'canary\',\'security\']}, {t:"Implement a `RateLimiter` using token bucket: `bool tryAcquire(int tokens)` is thread-safe and enforces rate.','C','A'],
+  ['Write a path traversal validator: `bool isPathSafe(string root, string path)` — reject `../` escapes and symlinks outside root.','C','A']
+  ]
+},
+{
+  id:'m29',phase:3,num:'29',icon:'⚡',
+  title:'Coroutines & Async Patterns',
+  desc:'co_await, co_yield, co_return, generators, task types, executors.',
+  qs:[
+  ['Coroutine-based async system.','C','A'],
+  ['Coroutine scheduler.','C','A'],
+  ['Async IO simulation.','C','A'],
+  ['Async networking framework.','C','A'],
+  ['Coroutine-based IO.','C','A'],
+  ['Performance flame graph generator.','C','A'],
+  ['Coroutines','C','A'],
+  ['Full coroutine scheduler.','C','A'],
+  ['Async task runtime (like mini boost::asio).','C','A']
+  ]
+},
+{
+  id:'m30',phase:3,num:'30',icon:'🏗️',
+  title:'Architecture, Patterns & Large-Scale C++',
+  desc:'SOLID, design patterns, modules, large codebase design, C++20 modules.',
+  qs:[
+  ['Plugin json config loader.','C','A'],
+  ['Msgpack serializer.','C','A'],
+  ['Zero copy ipc.','C','A'],
+  ['Event loop epoll.','C','A'],
+  ['Actor model sim.','C','A'],
+  ['DDS pubsub.','C','A'],
+  ['ECS game sim.','C','A'],
+  ['Dependency inject.','C','A'],
+  ['Hexagonal arch.','C','A'],
+  ['Cmd query sep.','C','A'],
+  ['Saga pattern.','C','A'],
+  ['Circuit breaker.','C','A'],
+  ['Retry backoff.','C','A'],
+  ['Prometheus metrics.','C','A'],
+  ['Span trace.','C','A'],
+  ['Grpc stub.','C','A'],
+  ['Wasm embed.','C','A'],
+  ['Aot jit.','C','A'],
+  ['Reflection sim.','C','A'],
+  ['Serialize vtable.','C','A'],
+  ['Hotswap module.','C','A'],
+  ['Entropy rng.','C','A'],
+  ['Bloom filter.','C','A'],
+  ['Rocksdb wrap.','C','A'],
+  ['Leveldb iter.','C','A'],
+  ['Sqlite embed.','C','A'],
+  ['Avx sim.','C','A'],
+  ['Neon arm.','C','A'],
+  ['Shader toy.','C','A'],
+  ['Vulkan hello.','C','A'],
+  ['Omp par.','C','A']
+  ]
+},
+];
+
+const SKEY = 'cpp_mastery_v1';
+const GH_REPO = 'Srivathsan98/CPP-Mastery';
+
+const ST={};
+try{Object.assign(ST,JSON.parse(localStorage.getItem(SKEY)||'{}'));}catch(e){}
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(ST));}catch(e){}}
+function k(mid,qi){return mid+'_'+qi;}
+function isChecked(mid,qi){return!!ST[k(mid,qi)];}
+function toggle(mid,qi){ST[k(mid,qi)]=!ST[k(mid,qi)];save();refreshAll(mid,qi);}
+
+function saveIssue(mid,qi,val){
+  const ik='iss_'+mid+'_'+qi;
+  if(val.trim()){ST[ik]=val.trim();}else{delete ST[ik];}
+  save();
+  const link=document.getElementById('issl-'+mid+'-'+qi);
+  if(link){
+    if(val.trim()){link.href='https://github.com/'+GH_REPO+'/issues/'+val.trim();link.className='issue-open active';}
+    else{link.href='#';link.className='issue-open';}
+  }
+}
+
+function modStats(m){let d=0;m.qs.forEach((_,i)=>{if(isChecked(m.id,i))d++;});return{done:d,total:m.qs.length};}
+function allStats(){let d=0,t=0,md=0;MODULES.forEach(m=>{const s=modStats(m);d+=s.done;t+=s.total;if(s.done===s.total&&s.total>0)md++;});return{done:d,total:t,modsDone:md};}
+
+function refreshAll(mid,qi){
+  const row=document.getElementById('row-'+mid+'-'+qi);
+  if(row){const c=isChecked(mid,qi);row.className=c?'checked':'';const cc=row.querySelector('.cb-check');if(cc)cc.style.display=c?'block':'none';}
+  const m=MODULES.find(x=>x.id===mid);
+  const s=modStats(m);const pct=s.total?Math.round(s.done/s.total*100):0;
+  const fill=document.getElementById('mfill-'+mid);if(fill)fill.style.width=pct+'%';
+  const cnt=document.getElementById('mcnt-'+mid);if(cnt)cnt.textContent=s.done+'/'+s.total;
+  const badge=document.getElementById('mbadge-'+mid);
+  if(badge){
+    if(pct===0){badge.className='mod-badge badge-ns';badge.textContent='Not started';}
+    else if(pct<100){badge.className='mod-badge badge-ip';badge.textContent=pct+'% done';}
+    else{badge.className='mod-badge badge-done';badge.textContent='Mastered \u2713';}
+  }
+  const ms=document.getElementById('ms-pct-'+mid);if(ms)ms.textContent=pct+'%';
+  const mpf=document.getElementById('ms-fill-'+mid);if(mpf)mpf.style.width=pct+'%';
+  const as=allStats();const ap=as.total?Math.round(as.done/as.total*100):0;
+  document.getElementById('done-count').textContent=as.done;
+  document.getElementById('total-count').textContent=as.total;
+  document.getElementById('pct-label').textContent=ap+'%';
+  document.getElementById('mod-done').textContent=as.modsDone;
+  document.getElementById('overall-fill').style.width=ap+'%';
+  const btn=document.getElementById('nav-'+mid);
+  if(btn)btn.className='mod-btn'+(pct===100?' done':pct>0?' partial':'');
+}
+
+let curPhase=0;
+function filterPhase(p){
+  curPhase=p;
+  document.querySelectorAll('.phase-btn').forEach((b,i)=>b.className='phase-btn'+(i===p?' active':''));
+  renderContent();
+}
+
+function renderModNav(){
+  const as=allStats();
+  document.getElementById('s-total').textContent=as.total;
+  let h='';
+  MODULES.forEach(m=>{
+    const s=modStats(m);const p=s.total?Math.round(s.done/s.total*100):0;
+    h+=`<button id="nav-${m.id}" class="mod-btn${p===100?' done':p>0?' partial':''}" onclick="jumpToModule('${m.id}')">${m.num}</button>`;
+  });
+  document.getElementById('mod-nav').innerHTML=h;
+}
+
+function jumpToModule(id){
+  const el=document.getElementById('card-'+id);
+  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});if(!el.classList.contains('open'))el.classList.add('open');}
+}
+function toggleModule(id){document.getElementById('card-'+id).classList.toggle('open');}
+
+function renderContent(){
+  const phases=curPhase===0?[1,2,3]:[curPhase];
+  const pl={1:'Phase 01 \u00b7 Foundation (Beginner)',2:'Phase 02 \u00b7 Intermediate (Core Mastery)',3:'Phase 03 \u00b7 Advanced (Expert Territory)'};
+  const TM={'T':'theory','C':'code','D':'debug','S':'design'};
+  const TC={'T':'tag-theory','C':'tag-code','D':'tag-debug','S':'tag-design'};
+  const DM={'B':'Beginner','I':'Intermediate','A':'Advanced'};
+  const DC={'B':'diff-B','I':'diff-I','A':'diff-A'};
+  let h='';
+  phases.forEach(ph=>{
+    const mods=MODULES.filter(m=>m.phase===ph);
+    h+=`<div class="phase-header">${pl[ph]} \u2014 ${mods.length} modules</div>`;
+    mods.forEach(m=>{
+      const s=modStats(m);const pct=s.total?Math.round(s.done/s.total*100):0;
+      let bc='mod-badge badge-ns',bt='Not started';
+      if(pct>0&&pct<100){bc='mod-badge badge-ip';bt=pct+'% done';}
+      else if(pct===100){bc='mod-badge badge-done';bt='Mastered \u2713';}
+      h+=`<div class="module" id="card-${m.id}"><div class="module-head" onclick="toggleModule('${m.id}')"><div class="module-num">${m.num}</div><div class="module-icon">${m.icon}</div><div class="module-info"><div class="module-title">${m.title}</div><div class="module-desc">${m.desc}</div></div><div class="module-right"><div class="mod-count" id="mcnt-${m.id}">${s.done}/${s.total}</div><div id="mbadge-${m.id}" class="${bc}">${bt}</div></div><div class="module-chevron">&#9658;</div></div><div class="mod-bar"><div class="mod-bar-fill" id="mfill-${m.id}" style="width:${pct}%"></div></div><div class="module-body"><div class="mod-stats"><div class="ms">Done: <span>${s.done}</span></div><div class="ms">Total: <span>${s.total}</span></div><div class="ms">Progress: <span id="ms-pct-${m.id}">${pct}%</span></div><div class="mod-prog-bar"><div class="mod-prog-fill" id="ms-fill-${m.id}" style="width:${pct}%"></div></div></div><div class="q-table-wrap"><table><thead><tr><th>&#10003;</th><th>#</th><th>Question</th><th>Type</th><th>Difficulty</th><th>Issue</th></tr></thead><tbody>`;
+      m.qs.forEach((q,qi)=>{
+        const c=isChecked(m.id,qi);
+        const issVal=ST['iss_'+m.id+'_'+qi]||'';
+        const typ=q[1]||'T', diff=q[2]||'I';
+        const qtext=q[0].replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        h+=`<tr id="row-${m.id}-${qi}" class="${c?'checked':''}" onclick="toggle('${m.id}',${qi})"><td><div class="cb"><span class="cb-check" style="display:${c?'block':'none'}">&#10003;</span></div></td><td class="q-num">${String(qi+1).padStart(3,'0')}</td><td class="q-text">${qtext}</td><td><span class="tag ${TC[typ]||'tag-theory'}">${TM[typ]||'theory'}</span></td><td><span class="diff ${DC[diff]||'diff-I'}">${DM[diff]||'Intermediate'}</span></td><td class="issue-cell" onclick="event.stopPropagation()"><input class="issue-input" id="iss-${m.id}-${qi}" type="text" placeholder="#" value="${issVal}" oninput="saveIssue('${m.id}',${qi},this.value)" /><a id="issl-${m.id}-${qi}" class="issue-open${issVal?' active':''}" href="${issVal?'https://github.com/'+GH_REPO+'/issues/'+issVal:'#'}" target="_blank">open</a></td></tr>`;
+      });
+      h+=`</tbody></table></div></div></div>`;
+    });
+  });
+  document.getElementById('content').innerHTML=h;
+}
+
+renderModNav();
+renderContent();
+const _as=allStats();const _ap=_as.total?Math.round(_as.done/_as.total*100):0;
+document.getElementById('done-count').textContent=_as.done;
+document.getElementById('total-count').textContent=_as.total;
+document.getElementById('pct-label').textContent=_ap+'%';
+document.getElementById('mod-done').textContent=_as.modsDone;
+document.getElementById('overall-fill').style.width=_ap+'%';
+
+</script>
+</body>
+</html>
